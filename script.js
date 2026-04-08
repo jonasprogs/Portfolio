@@ -113,16 +113,22 @@ const aboutObserver = new IntersectionObserver((entries) => {
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
 
-/* ─── Portfolio filter ──────────────────────────────────── */
-function filterPortfolio(category) {
+/* ─── Portfolio filter (type + category) ───────────────── */
+let activeType     = 'video';
+let activeCategory = 'all';
+
+function applyFilter() {
   const items = document.querySelectorAll('.reel-item');
   let visible = 0;
 
   items.forEach(item => {
-    const match = category === 'all' || item.dataset.cat === category;
+    const typeMatch = item.dataset.type === activeType;
+    const catMatch  = activeCategory === 'all' || item.dataset.cat === activeCategory;
+    const show      = typeMatch && catMatch;
+
     item.classList.remove('animate');
 
-    if (match) {
+    if (show) {
       item.style.display = '';
       const idx = visible;
       setTimeout(() => item.classList.add('animate'), idx * 80);
@@ -133,13 +139,28 @@ function filterPortfolio(category) {
   });
 }
 
+// Type tabs: Videos | Fotos
+document.querySelectorAll('.type-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeType = tab.dataset.type;
+    applyFilter();
+  });
+});
+
+// Category sub-filter
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    filterPortfolio(btn.dataset.filter);
+    activeCategory = btn.dataset.filter;
+    applyFilter();
   });
 });
+
+// Init: show only videos on load
+applyFilter();
 
 /* ─── Contact form (placeholder – connect to Formspree etc.) */
 document.getElementById('contactForm').addEventListener('submit', function (e) {

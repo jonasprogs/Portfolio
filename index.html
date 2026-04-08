@@ -83,7 +83,13 @@
       <a href="#contact" class="btn btn-ghost reveal delay-2">Projekt anfragen</a>
     </div>
 
-    <!-- Filter bar -->
+    <!-- Primary type tabs -->
+    <div class="type-tabs reveal">
+      <button class="type-tab active" data-type="video">Videos</button>
+      <button class="type-tab" data-type="photo">Fotos</button>
+    </div>
+
+    <!-- Category sub-filter -->
     <div class="filter-bar reveal">
       <button class="filter-btn active" data-filter="all">Alle</button>
       <button class="filter-btn" data-filter="chauffeur">Chauffeur Service</button>
@@ -92,9 +98,12 @@
     </div>
 
     <div class="reel-grid">
-      <!-- ── Mercedes-Benz ─────────────────────────── -->
-      <!-- Replace href with actual video URL; add thumbnail inside .reel-placeholder as <img> -->
-      <a href="#" class="reel-item" data-cat="mercedes">
+
+      <!-- ════ VIDEOS ════════════════════════════════════ -->
+      <!-- Replace href with actual video URL; add thumbnail as <img> inside .reel-placeholder -->
+
+      <!-- Mercedes-Benz – Video -->
+      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -107,7 +116,7 @@
         </div>
       </a>
 
-      <a href="#" class="reel-item" data-cat="mercedes">
+      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -120,7 +129,7 @@
         </div>
       </a>
 
-      <a href="#" class="reel-item" data-cat="mercedes">
+      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -133,8 +142,8 @@
         </div>
       </a>
 
-      <!-- ── Chauffeur Service ──────────────────────── -->
-      <a href="#" class="reel-item" data-cat="chauffeur">
+      <!-- Chauffeur Service – Video -->
+      <a href="#" class="reel-item" data-type="video" data-cat="chauffeur">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -147,7 +156,7 @@
         </div>
       </a>
 
-      <a href="#" class="reel-item" data-cat="chauffeur">
+      <a href="#" class="reel-item" data-type="video" data-cat="chauffeur">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -160,7 +169,7 @@
         </div>
       </a>
 
-      <a href="#" class="reel-item" data-cat="chauffeur">
+      <a href="#" class="reel-item" data-type="video" data-cat="chauffeur">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -173,8 +182,8 @@
         </div>
       </a>
 
-      <!-- ── Content ────────────────────────────────── -->
-      <a href="#" class="reel-item" data-cat="content">
+      <!-- Content – Video -->
+      <a href="#" class="reel-item" data-type="video" data-cat="content">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -187,7 +196,7 @@
         </div>
       </a>
 
-      <a href="#" class="reel-item" data-cat="content">
+      <a href="#" class="reel-item" data-type="video" data-cat="content">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -200,7 +209,7 @@
         </div>
       </a>
 
-      <a href="#" class="reel-item" data-cat="content">
+      <a href="#" class="reel-item" data-type="video" data-cat="content">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -212,6 +221,112 @@
           <p class="reel-cat">Event · Dokumentation</p>
         </div>
       </a>
+
+      <!-- ════ FOTOS ═════════════════════════════════════ -->
+      <!-- Replace href with full-res image URL; add thumbnail as <img> inside .reel-placeholder -->
+
+      <!-- Mercedes-Benz – Foto -->
+      <a href="#" class="reel-item" data-type="photo" data-cat="mercedes">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Mercedes-Benz</p>
+          <p class="reel-cat">Automotive · Fotografie</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-type="photo" data-cat="mercedes">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Mercedes-Benz</p>
+          <p class="reel-cat">Detail · Produkt</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-type="photo" data-cat="mercedes">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Mercedes-Benz</p>
+          <p class="reel-cat">Showroom · Exterior</p>
+        </div>
+      </a>
+
+      <!-- Chauffeur Service – Foto -->
+      <a href="#" class="reel-item" data-type="photo" data-cat="chauffeur">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">BlackLane</p>
+          <p class="reel-cat">Lifestyle · Luxury</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-type="photo" data-cat="chauffeur">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Chauffeur Service</p>
+          <p class="reel-cat">Interior · Detail</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-type="photo" data-cat="chauffeur">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Chauffeur Service</p>
+          <p class="reel-cat">Lifestyle · Portrait</p>
+        </div>
+      </a>
+
+      <!-- Content – Foto -->
+      <a href="#" class="reel-item" data-type="photo" data-cat="content">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Content Creation</p>
+          <p class="reel-cat">Social · Lifestyle</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-type="photo" data-cat="content">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Lifestyle Brand</p>
+          <p class="reel-cat">Fashion · Portrait</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-type="photo" data-cat="content">
+        <div class="reel-placeholder photo-ph">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Event Coverage</p>
+          <p class="reel-cat">Event · Dokumentation</p>
+        </div>
+      </a>
+
     </div>
   </section>
 
