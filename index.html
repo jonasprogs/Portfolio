@@ -83,9 +83,18 @@
       <a href="#contact" class="btn btn-ghost reveal delay-2">Projekt anfragen</a>
     </div>
 
+    <!-- Filter bar -->
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all">Alle</button>
+      <button class="filter-btn" data-filter="chauffeur">Chauffeur Service</button>
+      <button class="filter-btn" data-filter="mercedes">Mercedes-Benz</button>
+      <button class="filter-btn" data-filter="content">Content</button>
+    </div>
+
     <div class="reel-grid">
-      <!-- Replace href with actual video URLs; add thumbnail via CSS background-image or <img> inside .reel-placeholder -->
-      <a href="#" class="reel-item">
+      <!-- ── Mercedes-Benz ─────────────────────────── -->
+      <!-- Replace href with actual video URL; add thumbnail inside .reel-placeholder as <img> -->
+      <a href="#" class="reel-item" data-cat="mercedes">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -94,11 +103,38 @@
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Automotive · Brand Film</p>
+          <p class="reel-cat">Brand Film</p>
         </div>
       </a>
 
-      <a href="#" class="reel-item">
+      <a href="#" class="reel-item" data-cat="mercedes">
+        <div class="reel-placeholder">
+          <div class="play-btn">
+            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
+          </div>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Mercedes-Benz</p>
+          <p class="reel-cat">Showroom · Automotive</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-cat="mercedes">
+        <div class="reel-placeholder">
+          <div class="play-btn">
+            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
+          </div>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Mercedes-Benz</p>
+          <p class="reel-cat">Social · Reels</p>
+        </div>
+      </a>
+
+      <!-- ── Chauffeur Service ──────────────────────── -->
+      <a href="#" class="reel-item" data-cat="chauffeur">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -107,11 +143,11 @@
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">BlackLane</p>
-          <p class="reel-cat">Corporate · Brand Video</p>
+          <p class="reel-cat">Brand Video</p>
         </div>
       </a>
 
-      <a href="#" class="reel-item">
+      <a href="#" class="reel-item" data-cat="chauffeur">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -119,12 +155,12 @@
         </div>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
-          <p class="reel-title">Product Campaign</p>
-          <p class="reel-cat">Commercial · Product</p>
+          <p class="reel-title">Chauffeur Service</p>
+          <p class="reel-cat">Lifestyle · Luxury</p>
         </div>
       </a>
 
-      <a href="#" class="reel-item">
+      <a href="#" class="reel-item" data-cat="chauffeur">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -132,12 +168,13 @@
         </div>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
-          <p class="reel-title">Event Coverage</p>
-          <p class="reel-cat">Event · Dokumentation</p>
+          <p class="reel-title">Chauffeur Service</p>
+          <p class="reel-cat">Social · Reels</p>
         </div>
       </a>
 
-      <a href="#" class="reel-item">
+      <!-- ── Content ────────────────────────────────── -->
+      <a href="#" class="reel-item" data-cat="content">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -146,11 +183,11 @@
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Social Content</p>
-          <p class="reel-cat">TikTok · Reels · Social</p>
+          <p class="reel-cat">TikTok · Reels</p>
         </div>
       </a>
 
-      <a href="#" class="reel-item">
+      <a href="#" class="reel-item" data-cat="content">
         <div class="reel-placeholder">
           <div class="play-btn">
             <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
@@ -160,6 +197,19 @@
         <div class="reel-meta">
           <p class="reel-title">Lifestyle Brand</p>
           <p class="reel-cat">Lifestyle · Fashion</p>
+        </div>
+      </a>
+
+      <a href="#" class="reel-item" data-cat="content">
+        <div class="reel-placeholder">
+          <div class="play-btn">
+            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
+          </div>
+        </div>
+        <div class="reel-overlay"></div>
+        <div class="reel-meta">
+          <p class="reel-title">Event Coverage</p>
+          <p class="reel-cat">Event · Dokumentation</p>
         </div>
       </a>
     </div>

@@ -113,6 +113,34 @@ const aboutObserver = new IntersectionObserver((entries) => {
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
 
+/* ─── Portfolio filter ──────────────────────────────────── */
+function filterPortfolio(category) {
+  const items = document.querySelectorAll('.reel-item');
+  let visible = 0;
+
+  items.forEach(item => {
+    const match = category === 'all' || item.dataset.cat === category;
+    item.classList.remove('animate');
+
+    if (match) {
+      item.style.display = '';
+      const idx = visible;
+      setTimeout(() => item.classList.add('animate'), idx * 80);
+      visible++;
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterPortfolio(btn.dataset.filter);
+  });
+});
+
 /* ─── Contact form (placeholder – connect to Formspree etc.) */
 document.getElementById('contactForm').addEventListener('submit', function (e) {
   e.preventDefault();
