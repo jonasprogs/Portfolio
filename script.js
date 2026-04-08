@@ -1,0 +1,132 @@
+/* ─── Year ─────────────────────────────────────────────── */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ─── Nav – frosted glass on scroll ────────────────────── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ─── Mobile nav toggle ─────────────────────────────────── */
+const hamburger  = document.getElementById('hamburger');
+const mobileNav  = document.getElementById('mobileNav');
+
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('active');
+  mobileNav.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+
+mobileNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+/* ─── Intersection Observer helper ─────────────────────── */
+function observe(selector, callback, options = {}) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) callback(entry.target, observer);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px', ...options });
+
+  document.querySelectorAll(selector).forEach(el => observer.observe(el));
+  return observer;
+}
+
+/* ─── Generic scroll reveals ────────────────────────────── */
+observe('.reveal', (el, obs) => {
+  el.classList.add('visible');
+  obs.unobserve(el);
+});
+
+/* ─── Stats counter animation ───────────────────────────── */
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function countUp(el) {
+  const target   = parseInt(el.dataset.target, 10);
+  const suffix   = el.dataset.suffix || '';
+  const format   = el.dataset.format;
+  const duration = 2200;
+  const start    = performance.now();
+
+  function tick(now) {
+    const progress = easeOutCubic(Math.min((now - start) / duration, 1));
+    const value    = Math.round(progress * target);
+    el.textContent = (format === 'de'
+      ? value.toLocaleString('de-DE')
+      : value.toString()) + suffix;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.stat-card').forEach((card, i) => {
+        setTimeout(() => {
+          card.classList.add('animate');
+          countUp(card.querySelector('.stat-num'));
+        }, i * 150);
+      });
+      statsObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+
+const statsSection = document.getElementById('stats');
+if (statsSection) statsObserver.observe(statsSection);
+
+/* ─── Portfolio staggered reveal ────────────────────────── */
+const reelObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.reel-item').forEach((item, i) => {
+        setTimeout(() => item.classList.add('animate'), i * 90);
+      });
+      reelObserver.disconnect();
+    }
+  });
+}, { threshold: 0.1 });
+
+const reelGrid = document.querySelector('.reel-grid');
+if (reelGrid) reelObserver.observe(reelGrid);
+
+/* ─── About section slide-in ────────────────────────────── */
+const aboutObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.getElementById('aboutImg')?.classList.add('animate');
+      document.getElementById('aboutTxt')?.classList.add('animate');
+      aboutObserver.disconnect();
+    }
+  });
+}, { threshold: 0.2 });
+
+const aboutSection = document.getElementById('about');
+if (aboutSection) aboutObserver.observe(aboutSection);
+
+/* ─── Contact form (placeholder – connect to Formspree etc.) */
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const btn  = this.querySelector('button[type="submit"]');
+  const orig = btn.textContent;
+
+  btn.textContent = 'Gesendet \u2713';
+  btn.disabled    = true;
+  btn.style.cssText = 'background:#1a1a1a;color:#555;cursor:default;transform:none;';
+
+  setTimeout(() => {
+    btn.textContent  = orig;
+    btn.disabled     = false;
+    btn.style.cssText = '';
+    this.reset();
+  }, 4000);
+});
