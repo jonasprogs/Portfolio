@@ -113,8 +113,7 @@ const aboutObserver = new IntersectionObserver((entries) => {
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
 
-/* ─── Portfolio filter (type + category) ───────────────── */
-let activeType     = 'video';
+/* ─── Portfolio category filter ────────────────────────── */
 let activeCategory = 'all';
 
 function applyFilter() {
@@ -122,13 +121,10 @@ function applyFilter() {
   let visible = 0;
 
   items.forEach(item => {
-    const typeMatch = item.dataset.type === activeType;
-    const catMatch  = activeCategory === 'all' || item.dataset.cat === activeCategory;
-    const show      = typeMatch && catMatch;
-
+    const match = activeCategory === 'all' || item.dataset.cat === activeCategory;
     item.classList.remove('animate');
 
-    if (show) {
+    if (match) {
       item.style.display = '';
       const idx = visible;
       setTimeout(() => item.classList.add('animate'), idx * 80);
@@ -139,17 +135,6 @@ function applyFilter() {
   });
 }
 
-// Type tabs: Videos | Fotos
-document.querySelectorAll('.type-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    activeType = tab.dataset.type;
-    applyFilter();
-  });
-});
-
-// Category sub-filter
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -159,8 +144,29 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-// Init: show only videos on load
 applyFilter();
+
+/* ─── Video autoplay on scroll ──────────────────────────── */
+/*
+  Sobald du ein echtes Video einfügst:
+    <video class="reel-video" src="dein-video.mp4" muted loop playsinline preload="metadata">
+  startet es automatisch, wenn es im Sichtfeld erscheint, und pausiert wenn nicht.
+*/
+const videoPlayObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const video = entry.target.querySelector('.reel-video');
+    if (!video) return;
+    if (entry.isIntersecting) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.reel-item').forEach(item => {
+  videoPlayObserver.observe(item);
+});
 
 /* ─── Contact form (placeholder – connect to Formspree etc.) */
 document.getElementById('contactForm').addEventListener('submit', function (e) {
