@@ -186,18 +186,13 @@ body {
 }
 
 .hero-headline {
-  font-size: clamp(60px, 11vw, 148px);
+  font-size: clamp(40px, 6.5vw, 96px);
   font-weight: 300;
-  letter-spacing: -0.025em;
-  line-height: 0.95;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
   color: var(--white);
   opacity: 0;
   animation: heroFade 1s ease forwards 0.4s;
-}
-
-.hero-headline strong {
-  font-weight: 600;
-  display: block;
 }
 
 .hero-sub {
