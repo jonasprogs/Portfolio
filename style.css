@@ -474,6 +474,12 @@ body {
 
 .reel-item:hover .reel-video { transform: scale(1.04); }
 
+/* YouTube iframe embed */
+.reel-item iframe.reel-video {
+  pointer-events: none;
+  transform: none !important;
+}
+
 /* Echtes Foto */
 .reel-thumb {
   width: 100%;
