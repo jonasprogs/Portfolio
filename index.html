@@ -108,21 +108,32 @@
 
       <!-- ── Mercedes-Benz (2 Video + 1 Foto) ───────────── -->
 
-      <!--
-        VIDEO HINZUFÜGEN: .reel-placeholder ersetzen durch:
-        <video class="reel-video" src="dein-video.mp4" muted loop playsinline preload="metadata"></video>
-        Das Video startet dann automatisch beim Scrollen.
+      <!-- ═══════════════════════════════════════════════════
+        WIE DU DEINE EIGENEN INHALTE EINFÜGST
+        ─────────────────────────────────────────────────────
+        VIDEO ersetzen:
+          1. Dein Video hochladen (z.B. auf GitHub, Cloudflare R2,
+             Google Drive – muss ein direkter .mp4-Link sein)
+          2. Im <video>-Tag: src="DEIN-LINK.mp4" eintragen
+          3. Das href="" der <a> kannst du auf deinen TikTok-
+             oder Instagram-Post zeigen lassen
 
-        FOTO HINZUFÜGEN: .reel-placeholder ersetzen durch:
-        <img class="reel-thumb" src="dein-foto.jpg" alt="Beschreibung">
-      -->
+        FOTO ersetzen:
+          1. Foto hochladen (z.B. in den /img Ordner des Repos)
+          2. Im <img>-Tag: src="img/dein-foto.jpg" eintragen
+          3. Das href="" kann auf die volle Bildgröße zeigen
 
+        Die Demo-Inhalte unten sind nur Beispiele – Videos von
+        Google's Public Sample Library, Fotos von picsum.photos
+      ════════════════════════════════════════════════════════ -->
+
+      <!-- ── Mercedes-Benz ──────────────────────────────── -->
+
+      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
       <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <div class="reel-placeholder">
-          <div class="play-btn">
-            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
-          </div>
-        </div>
+        <video class="reel-video"
+               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+               muted loop playsinline preload="metadata"></video>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Mercedes-Benz</p>
@@ -130,10 +141,9 @@
         </div>
       </a>
 
+      <!-- FOTO: src durch deinen Foto-Link ersetzen -->
       <a href="#" class="reel-item" data-type="photo" data-cat="mercedes">
-        <div class="reel-placeholder photo-ph">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-        </div>
+        <img class="reel-thumb" src="https://picsum.photos/seed/mercedes-auto/600/1067" alt="Mercedes-Benz Fotografie">
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Mercedes-Benz</p>
@@ -141,12 +151,11 @@
         </div>
       </a>
 
+      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
       <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <div class="reel-placeholder">
-          <div class="play-btn">
-            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
-          </div>
-        </div>
+        <video class="reel-video"
+               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+               muted loop playsinline preload="metadata"></video>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Mercedes-Benz</p>
@@ -154,14 +163,13 @@
         </div>
       </a>
 
-      <!-- ── Chauffeur Service (2 Video + 1 Foto) ────────── -->
+      <!-- ── Chauffeur Service ──────────────────────────── -->
 
+      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
       <a href="#" class="reel-item" data-type="video" data-cat="chauffeur">
-        <div class="reel-placeholder">
-          <div class="play-btn">
-            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
-          </div>
-        </div>
+        <video class="reel-video"
+               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+               muted loop playsinline preload="metadata"></video>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">BlackLane</p>
@@ -169,10 +177,9 @@
         </div>
       </a>
 
+      <!-- FOTO: src durch deinen Foto-Link ersetzen -->
       <a href="#" class="reel-item" data-type="photo" data-cat="chauffeur">
-        <div class="reel-placeholder photo-ph">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-        </div>
+        <img class="reel-thumb" src="https://picsum.photos/seed/chauffeur-dark/600/1067" alt="Chauffeur Service Fotografie">
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Chauffeur Service</p>
@@ -180,12 +187,11 @@
         </div>
       </a>
 
+      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
       <a href="#" class="reel-item" data-type="video" data-cat="chauffeur">
-        <div class="reel-placeholder">
-          <div class="play-btn">
-            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
-          </div>
-        </div>
+        <video class="reel-video"
+               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+               muted loop playsinline preload="metadata"></video>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Chauffeur Service</p>
@@ -193,14 +199,13 @@
         </div>
       </a>
 
-      <!-- ── Content (2 Video + 1 Foto) ─────────────────── -->
+      <!-- ── Content ────────────────────────────────────── -->
 
+      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
       <a href="#" class="reel-item" data-type="video" data-cat="content">
-        <div class="reel-placeholder">
-          <div class="play-btn">
-            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
-          </div>
-        </div>
+        <video class="reel-video"
+               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+               muted loop playsinline preload="metadata"></video>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Social Content</p>
@@ -208,10 +213,9 @@
         </div>
       </a>
 
+      <!-- FOTO: src durch deinen Foto-Link ersetzen -->
       <a href="#" class="reel-item" data-type="photo" data-cat="content">
-        <div class="reel-placeholder photo-ph">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="opacity:.15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-        </div>
+        <img class="reel-thumb" src="https://picsum.photos/seed/lifestyle-content/600/1067" alt="Lifestyle Fotografie">
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Lifestyle Brand</p>
@@ -219,12 +223,11 @@
         </div>
       </a>
 
+      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
       <a href="#" class="reel-item" data-type="video" data-cat="content">
-        <div class="reel-placeholder">
-          <div class="play-btn">
-            <svg viewBox="0 0 12 14"><polygon points="0,0 12,7 0,14"/></svg>
-          </div>
-        </div>
+        <video class="reel-video"
+               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+               muted loop playsinline preload="metadata"></video>
         <div class="reel-overlay"></div>
         <div class="reel-meta">
           <p class="reel-title">Event Coverage</p>
