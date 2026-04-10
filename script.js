@@ -168,20 +168,39 @@ document.querySelectorAll('.reel-item').forEach(item => {
   videoPlayObserver.observe(item);
 });
 
-/* ─── Contact form (placeholder – connect to Formspree etc.) */
-document.getElementById('contactForm').addEventListener('submit', function (e) {
+/* ─── Contact form → Formspree ──────────────────────────── */
+document.getElementById('contactForm').addEventListener('submit', async function (e) {
   e.preventDefault();
   const btn  = this.querySelector('button[type="submit"]');
   const orig = btn.textContent;
 
-  btn.textContent = 'Gesendet \u2713';
-  btn.disabled    = true;
-  btn.style.cssText = 'background:#1a1a1a;color:#555;cursor:default;transform:none;';
+  btn.textContent   = 'Wird gesendet …';
+  btn.disabled      = true;
 
-  setTimeout(() => {
-    btn.textContent  = orig;
-    btn.disabled     = false;
-    btn.style.cssText = '';
-    this.reset();
-  }, 4000);
+  try {
+    const res = await fetch(this.action, {
+      method:  'POST',
+      body:    new FormData(this),
+      headers: { Accept: 'application/json' }
+    });
+
+    if (res.ok) {
+      btn.textContent   = 'Gesendet \u2713';
+      btn.style.cssText = 'background:#1a1a1a;color:#555;cursor:default;transform:none;';
+      this.reset();
+      setTimeout(() => {
+        btn.textContent   = orig;
+        btn.disabled      = false;
+        btn.style.cssText = '';
+      }, 4000);
+    } else {
+      btn.textContent = 'Fehler – bitte erneut versuchen';
+      btn.disabled    = false;
+      setTimeout(() => { btn.textContent = orig; }, 4000);
+    }
+  } catch {
+    btn.textContent = 'Fehler – bitte erneut versuchen';
+    btn.disabled    = false;
+    setTimeout(() => { btn.textContent = orig; }, 4000);
+  }
 });
