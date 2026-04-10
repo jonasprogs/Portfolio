@@ -689,6 +689,142 @@ body {
   color: var(--text);
 }
 
+/* ─── FOTO-GALERIE ────────────────────────────────────── */
+#fotos {
+  padding: 120px 60px;
+}
+
+#fotos .section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.foto-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.foto-item {
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--bg-3);
+}
+
+.foto-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, opacity 0.3s;
+}
+
+.foto-item:hover img {
+  transform: scale(1.06);
+  opacity: 0.85;
+}
+
+.foto-more-wrap {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  padding: 14px 40px;
+  border-radius: 2px;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-outline:hover {
+  border-color: rgba(255,255,255,0.35);
+  color: var(--white);
+}
+
+/* ─── LIGHTBOX ────────────────────────────────────────── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lb-img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 2px;
+  user-select: none;
+}
+
+.lb-close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.lb-close:hover { color: var(--white); }
+
+.lb-prev,
+.lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font-size: 3.5rem;
+  cursor: pointer;
+  padding: 0 20px;
+  line-height: 1;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.lb-prev { left: 0; }
+.lb-next { right: 0; }
+.lb-prev:hover,
+.lb-next:hover { color: var(--white); }
+
+@media (max-width: 900px) {
+  .foto-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #fotos {
+    padding: 80px 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .foto-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* ─── CONTACT ─────────────────────────────────────────── */
 #contact {
   padding: 120px 60px;

@@ -168,6 +168,80 @@ document.querySelectorAll('.reel-item').forEach(item => {
   videoPlayObserver.observe(item);
 });
 
+/* ─── Foto-Galerie ──────────────────────────────────────── */
+// Füge hier die Dateinamen deiner Fotos ein:
+const FOTOS = [
+  // Beispiel: 'fotos/foto1.jpeg', 'fotos/foto2.jpeg', ...
+];
+
+const PER_PAGE   = 12; // 2 Reihen à 6 Fotos
+let   shownCount = 0;
+let   lbIndex    = 0;
+
+const fotoGrid     = document.getElementById('fotoGrid');
+const fotoMoreWrap = document.getElementById('fotoMoreWrap');
+const fotoMoreBtn  = document.getElementById('fotoMore');
+const lightbox     = document.getElementById('lightbox');
+const lbImg        = document.getElementById('lbImg');
+
+function openLightbox(index) {
+  lbIndex = index;
+  lbImg.src = FOTOS[lbIndex];
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+
+document.getElementById('lbPrev').addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + FOTOS.length) % FOTOS.length;
+  lbImg.src = FOTOS[lbIndex];
+});
+
+document.getElementById('lbNext').addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % FOTOS.length;
+  lbImg.src = FOTOS[lbIndex];
+});
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape')      closeLightbox();
+  if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + FOTOS.length) % FOTOS.length; lbImg.src = FOTOS[lbIndex]; }
+  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % FOTOS.length;                lbImg.src = FOTOS[lbIndex]; }
+});
+
+function loadMoreFotos() {
+  const next = FOTOS.slice(shownCount, shownCount + PER_PAGE);
+  next.forEach((src, i) => {
+    const item = document.createElement('div');
+    item.className = 'foto-item';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Foto';
+    img.loading = 'lazy';
+    const globalIndex = shownCount + i;
+    item.addEventListener('click', () => openLightbox(globalIndex));
+    item.appendChild(img);
+    fotoGrid.appendChild(item);
+  });
+  shownCount += next.length;
+  fotoMoreWrap.style.display = shownCount < FOTOS.length ? 'block' : 'none';
+}
+
+if (FOTOS.length > 0) {
+  loadMoreFotos();
+  if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', loadMoreFotos);
+}
+
 /* ─── Contact form → Formspree ──────────────────────────── */
 document.getElementById('contactForm').addEventListener('submit', async function (e) {
   e.preventDefault();

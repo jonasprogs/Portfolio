@@ -18,6 +18,7 @@
     <a href="#hero" class="nav-logo">JM</a>
     <ul class="nav-menu">
       <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#fotos">Fotos</a></li>
       <li><a href="#about">Über mich</a></li>
       <li class="nav-socials">
         <!-- Update with actual Instagram handle -->
@@ -71,11 +72,11 @@
   <section id="stats">
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-num" data-target="6128" data-format="de" data-suffix="">—</div>
+        <div class="stat-num" data-target="6128" data-format="de" data-suffix="+">—</div>
         <p class="stat-desc">TikTok Follower</p>
       </div>
       <div class="stat-card">
-        <div class="stat-num" data-target="25000" data-format="de" data-suffix="">—</div>
+        <div class="stat-num" data-target="25000" data-format="de" data-suffix="+">—</div>
         <p class="stat-desc">Ø Aufrufe pro Video</p>
       </div>
     </div>
@@ -168,6 +169,26 @@
     </div>
 
   </section>
+
+  <!-- ─── Foto-Galerie ────────────────────────────────────── -->
+  <section id="fotos">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Fotografie</p>
+      <h2 class="section-title">Best of<br>Fotos.</h2>
+    </div>
+    <div class="foto-grid reveal" id="fotoGrid"></div>
+    <div class="foto-more-wrap" id="fotoMoreWrap" style="display:none">
+      <button class="btn btn-outline" id="fotoMore">Mehr anzeigen</button>
+    </div>
+  </section>
+
+  <!-- ─── Lightbox ─────────────────────────────────────────── -->
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Foto-Ansicht">
+    <button class="lb-close" id="lbClose" aria-label="Schließen">&#x2715;</button>
+    <button class="lb-prev"  id="lbPrev"  aria-label="Vorheriges Foto">&#x2039;</button>
+    <img class="lb-img" id="lbImg" src="" alt="">
+    <button class="lb-next"  id="lbNext"  aria-label="Nächstes Foto">&#x203A;</button>
+  </div>
 
   <!-- ─── About ───────────────────────────────────────────── -->
   <section id="about">
