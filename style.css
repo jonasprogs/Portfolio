@@ -217,7 +217,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 15%;
   opacity: 0.18;
   z-index: 0;
   pointer-events: none;
@@ -345,10 +345,11 @@ body {
 }
 
 .stats-grid {
-  max-width: 1280px;
+  max-width: 900px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
 }
 
 .stat-card {
