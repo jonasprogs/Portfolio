@@ -106,200 +106,59 @@
 
     <div class="reel-grid">
 
-      <!-- ── Mercedes-Benz (2 Video + 1 Foto) ───────────── -->
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           SO FÜGST DU EIN YOUTUBE-VIDEO EIN:
+           1. Video auf YouTube hochladen (öffentlich / nicht gelistet)
+           2. YouTube-Link schicken → ich trage ihn ein
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 
-      <!-- ═══════════════════════════════════════════════════
-        WIE DU DEINE EIGENEN INHALTE EINFÜGST
-        ─────────────────────────────────────────────────────
-        VIDEO ersetzen:
-          1. Dein Video hochladen (z.B. auf GitHub, Cloudflare R2,
-             Google Drive – muss ein direkter .mp4-Link sein)
-          2. Im <video>-Tag: src="DEIN-LINK.mp4" eintragen
-          3. Das href="" der <a> kannst du auf deinen TikTok-
-             oder Instagram-Post zeigen lassen
+      <!-- ── Mercedes-Benz ─────────────────────────────────── -->
 
-        FOTO ersetzen:
-          1. Foto hochladen (z.B. in den /img Ordner des Repos)
-          2. Im <img>-Tag: src="img/dein-foto.jpg" eintragen
-          3. Das href="" kann auf die volle Bildgröße zeigen
-
-        Die Demo-Inhalte unten sind nur Beispiele – Videos von
-        Google's Public Sample Library, Fotos von picsum.photos
-      ════════════════════════════════════════════════════════ -->
-
-      <!-- ── Mercedes-Benz ──────────────────────────────── -->
-
-      <!-- Mercedes-Benz Video 1 (YouTube) -->
-      <a href="https://youtube.com/shorts/_vFn2VFerR4" target="_blank" rel="noopener" class="reel-item" data-type="video" data-cat="mercedes">
-        <iframe class="reel-video"
-                src="https://www.youtube.com/embed/_vFn2VFerR4?autoplay=1&mute=1&loop=1&playlist=_vFn2VFerR4&controls=0&playsinline=1&rel=0&modestbranding=1"
-                frameborder="0"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowfullscreen></iframe>
+      <a href="https://youtube.com/shorts/_vFn2VFerR4" target="_blank" rel="noopener"
+         class="reel-item" data-type="video" data-cat="mercedes">
+        <img class="reel-thumb"
+             src="https://img.youtube.com/vi/_vFn2VFerR4/hqdefault.jpg"
+             alt="Mercedes-Benz">
         <div class="reel-overlay"></div>
+        <div class="reel-play-icon">
+          <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>
+        </div>
         <div class="reel-meta">
           <p class="reel-title">Mercedes-Benz</p>
           <p class="reel-cat">Brand Film · Video</p>
         </div>
       </a>
 
-      <!-- Mercedes-Benz Video 2 -->
-      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <video class="reel-video"
-               src="https://pub-cac427cc8e5e451a8e398eccc485e29c.r2.dev/IMG_0647.mov"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Automotive · Video</p>
-        </div>
-      </a>
+      <!-- Mercedes Slot 2 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="mercedes"></div>
 
-      <!-- Mercedes-Benz Video 3 -->
-      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <video class="reel-video"
-               src="https://pub-cac427cc8e5e451a8e398eccc485e29c.r2.dev/IMG_0974.mov"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Social Reels · Video</p>
-        </div>
-      </a>
+      <!-- Mercedes Slot 3 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="mercedes"></div>
 
-      <!-- Mercedes-Benz Video 4 -->
-      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <video class="reel-video"
-               src="https://pub-cac427cc8e5e451a8e398eccc485e29c.r2.dev/IMG_0977.mov"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Automotive · Video</p>
-        </div>
-      </a>
+      <!-- ── Chauffeur Service ──────────────────────────────── -->
 
-      <!-- Mercedes-Benz Video 5 -->
-      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <video class="reel-video"
-               src="https://pub-cac427cc8e5e451a8e398eccc485e29c.r2.dev/IMG_1046.mov"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Brand Film · Video</p>
-        </div>
-      </a>
+      <!-- Chauffeur Slot 1 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="chauffeur"></div>
 
-      <!-- Mercedes-Benz Video 6 -->
-      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <video class="reel-video"
-               src="https://pub-cac427cc8e5e451a8e398eccc485e29c.r2.dev/IMG_5357.mov"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Social Reels · Video</p>
-        </div>
-      </a>
+      <!-- Chauffeur Slot 2 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="chauffeur"></div>
 
-      <!-- Mercedes-Benz Video 7 -->
-      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <video class="reel-video"
-               src="https://pub-cac427cc8e5e451a8e398eccc485e29c.r2.dev/copy_6983A0E9-D9EB-4DAA-822F-CD855734F57C.mov"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Automotive · Video</p>
-        </div>
-      </a>
+      <!-- Chauffeur Slot 3 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="chauffeur"></div>
 
-      <!-- Mercedes-Benz Video 8 -->
-      <a href="#" class="reel-item" data-type="video" data-cat="mercedes">
-        <video class="reel-video"
-               src="https://pub-cac427cc8e5e451a8e398eccc485e29c.r2.dev/copy_D25B3A90-4335-45B3-8836-5312F90491CD.mov"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Mercedes-Benz</p>
-          <p class="reel-cat">Brand Film · Video</p>
-        </div>
-      </a>
+      <!-- ── Content ───────────────────────────────────────── -->
 
-      <!-- ── Chauffeur Service ──────────────────────────── -->
+      <!-- Content Slot 1 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="content"></div>
 
-      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
-      <a href="#" class="reel-item" data-type="video" data-cat="chauffeur">
-        <video class="reel-video"
-               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">BlackLane</p>
-          <p class="reel-cat">Brand Film · Video</p>
-        </div>
-      </a>
+      <!-- Content Slot 2 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="content"></div>
 
-      <!-- FOTO: src durch deinen Foto-Link ersetzen -->
-      <a href="#" class="reel-item" data-type="photo" data-cat="chauffeur">
-        <img class="reel-thumb" src="https://picsum.photos/seed/chauffeur-dark/600/1067" alt="Chauffeur Service Fotografie">
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Chauffeur Service</p>
-          <p class="reel-cat">Luxury · Foto</p>
-        </div>
-      </a>
-
-      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
-      <a href="#" class="reel-item" data-type="video" data-cat="chauffeur">
-        <video class="reel-video"
-               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Chauffeur Service</p>
-          <p class="reel-cat">Social Reels · Video</p>
-        </div>
-      </a>
-
-      <!-- ── Content ────────────────────────────────────── -->
-
-      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
-      <a href="#" class="reel-item" data-type="video" data-cat="content">
-        <video class="reel-video"
-               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Social Content</p>
-          <p class="reel-cat">TikTok · Reels · Video</p>
-        </div>
-      </a>
-
-      <!-- FOTO: src durch deinen Foto-Link ersetzen -->
-      <a href="#" class="reel-item" data-type="photo" data-cat="content">
-        <img class="reel-thumb" src="https://picsum.photos/seed/lifestyle-content/600/1067" alt="Lifestyle Fotografie">
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Lifestyle Brand</p>
-          <p class="reel-cat">Lifestyle · Foto</p>
-        </div>
-      </a>
-
-      <!-- VIDEO: src durch deinen .mp4-Link ersetzen -->
-      <a href="#" class="reel-item" data-type="video" data-cat="content">
-        <video class="reel-video"
-               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
-               muted loop playsinline preload="metadata"></video>
-        <div class="reel-overlay"></div>
-        <div class="reel-meta">
-          <p class="reel-title">Event Coverage</p>
-          <p class="reel-cat">Event · Video</p>
-        </div>
-      </a>
+      <!-- Content Slot 3 → YouTube-Link eintragen -->
+      <div class="reel-item reel-soon" data-type="video" data-cat="content"></div>
 
     </div>
+
   </section>
 
   <!-- ─── About ───────────────────────────────────────────── -->
