@@ -52,7 +52,7 @@ function countUp(el) {
   const target   = parseInt(el.dataset.target, 10);
   const suffix   = el.dataset.suffix || '';
   const format   = el.dataset.format;
-  const duration = 2200;
+  const duration = 8500;
   const start    = performance.now();
 
   function tick(now) {
