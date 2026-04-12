@@ -1123,34 +1123,34 @@ footer {
   .nav-menu  { display: none; }
   .hamburger { display: flex; }
 
-  #hero    { min-height: 300px; padding: 108px 24px 36px; }
+  #hero    { min-height: 340px; padding: 116px 24px 44px; }
   #portfolio,
   #about,
   #contact { padding: 80px 24px; }
   footer   { padding: 28px 24px; }
 
-  .hero-eyebrow           { letter-spacing: 0.2em; margin-bottom: 16px; }
-  .hero-headline          { font-size: clamp(34px, 12vw, 52px); }
-  .hero-sub               { max-width: 300px; font-size: 15px; line-height: 1.55; margin-top: 16px; }
-  .hero-ctas              { flex-direction: column; align-items: center; width: 100%; max-width: 320px; gap: 12px; margin-top: 26px; }
-  .hero-bubble            { bottom: calc(16px + env(safe-area-inset-bottom)); width: calc(100% - 40px); max-width: 280px; padding: 13px 18px; font-size: 10px; letter-spacing: 0.12em; }
-  .btn                    { width: 100%; }
+  .hero-eyebrow           { letter-spacing: 0.22em; margin-bottom: 18px; }
+  .hero-headline          { font-size: clamp(38px, 10vw, 58px); }
+  .hero-sub               { max-width: 360px; font-size: 15px; line-height: 1.6; margin-top: 18px; }
+  .hero-ctas              { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center; width: 100%; max-width: 520px; gap: 12px; margin-top: 28px; }
+  .hero-bubble            { bottom: calc(18px + env(safe-area-inset-bottom)); width: max-content; max-width: none; padding: 12px 20px; font-size: 10px; letter-spacing: 0.12em; }
+  .btn                    { width: auto; min-width: 188px; }
 
-  .about-shell             { padding: 28px; border-radius: 28px; }
-  .about-grid              { gap: 32px; }
-  .about-img               { max-width: none; aspect-ratio: 4 / 4.8; border-radius: 24px; }
-  .about-lead              { font-size: 18px; margin: 20px 0; }
+  .about-shell             { padding: 34px; border-radius: 34px; }
+  .about-grid              { gap: 36px; }
+  .about-img               { max-width: 460px; aspect-ratio: 3 / 4; border-radius: 28px; }
+  .about-lead              { font-size: 19px; margin: 22px 0; }
   .about-body              { font-size: 15px; line-height: 1.8; }
-  .stats-grid              { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
-  .stat-card               { padding: 24px; border-radius: 22px; }
-  .stat-num                { font-size: clamp(38px, 12vw, 56px); }
+  .stats-grid              { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 32px; }
+  .stat-card               { padding: 22px 20px; border-radius: 24px; }
+  .stat-num                { font-size: clamp(34px, 9vw, 52px); }
   .clients-list            { gap: 10px; }
-  .client-chip             { width: 100%; justify-content: center; text-align: center; }
+  .client-chip             { width: auto; text-align: center; }
 
-  .section-title           { font-size: clamp(26px, 9vw, 40px); }
-  .project-title           { font-size: clamp(28px, 9vw, 40px); }
-  .reel-grid               { grid-template-columns: 1fr; gap: 14px; }
-  .reel-item               { border-radius: 22px; }
+  .section-title           { font-size: clamp(28px, 7vw, 44px); }
+  .project-title           { font-size: clamp(30px, 7.5vw, 44px); }
+  .reel-grid               { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .reel-item               { border-radius: 24px; }
   .section-head            { flex-direction: column; align-items: flex-start; margin-bottom: 42px; }
   .portfolio-project + .portfolio-project { margin-top: 84px; }
 
@@ -1158,4 +1158,14 @@ footer {
 
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
   .footer-left  { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+@media (max-width: 430px) {
+  .hero-ctas   { flex-direction: column; max-width: 320px; }
+  .hero-bubble { width: calc(100% - 40px); max-width: 280px; }
+  .btn         { width: 100%; min-width: 0; }
+
+  .about-shell { padding: 28px; border-radius: 28px; }
+  .stats-grid  { grid-template-columns: 1fr; }
+  .reel-grid   { grid-template-columns: 1fr; }
 }
