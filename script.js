@@ -4,6 +4,17 @@ document.getElementById('year').textContent = new Date().getFullYear();
 /* ─── Hero bubble reveal ───────────────────────────────── */
 const heroBubble = document.querySelector('.hero-bubble');
 const portfolioSection = document.getElementById('portfolio');
+const heroPortfolioLink = document.querySelector('#hero a[href="#portfolio"]');
+
+function scrollToSection(target) {
+  const navHeight = document.getElementById('mainNav')?.offsetHeight || 0;
+  const y = target.getBoundingClientRect().top + window.scrollY - navHeight - 24;
+
+  window.scrollTo({
+    top: Math.max(y, 0),
+    behavior: 'smooth'
+  });
+}
 
 function updateHeroBubble() {
   if (!heroBubble || !portfolioSection || !heroBubble.dataset.ready) return;
@@ -23,6 +34,19 @@ if (heroBubble) {
     heroBubble.dataset.ready = 'true';
     updateHeroBubble();
   }, 2200);
+
+  heroBubble.addEventListener('click', (event) => {
+    if (!portfolioSection) return;
+    event.preventDefault();
+    scrollToSection(portfolioSection);
+  });
+}
+
+if (heroPortfolioLink && portfolioSection) {
+  heroPortfolioLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    scrollToSection(portfolioSection);
+  });
 }
 
 window.addEventListener('scroll', updateHeroBubble, { passive: true });

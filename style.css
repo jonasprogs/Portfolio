@@ -19,6 +19,14 @@ html {
   scroll-behavior: smooth;
 }
 
+#hero,
+#about,
+#portfolio,
+#fotos,
+#contact {
+  scroll-margin-top: 110px;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -308,6 +316,8 @@ body::before {
   visibility: hidden;
   pointer-events: none;
   z-index: 1100;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: translate 0.25s, background 0.2s, border-color 0.2s, opacity 0.45s ease;
 }
 
@@ -659,6 +669,7 @@ body::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 60%;
 }
 
 .about-txt {
@@ -711,6 +722,9 @@ body::before {
 }
 
 .client-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.06em;
@@ -1109,25 +1123,33 @@ footer {
   .nav-menu  { display: none; }
   .hamburger { display: flex; }
 
-  #hero    { min-height: 320px; padding: 112px 24px 44px; }
+  #hero    { min-height: 300px; padding: 108px 24px 36px; }
   #portfolio,
   #about,
   #contact { padding: 80px 24px; }
   footer   { padding: 28px 24px; }
 
-  .hero-ctas { flex-direction: column; align-items: center; width: 100%; max-width: 320px; }
-  .hero-bubble { bottom: 18px; padding: 11px 18px; font-size: 10px; letter-spacing: 0.12em; }
-  .btn       { width: 100%; }
+  .hero-eyebrow           { letter-spacing: 0.2em; margin-bottom: 16px; }
+  .hero-headline          { font-size: clamp(34px, 12vw, 52px); }
+  .hero-sub               { max-width: 300px; font-size: 15px; line-height: 1.55; margin-top: 16px; }
+  .hero-ctas              { flex-direction: column; align-items: center; width: 100%; max-width: 320px; gap: 12px; margin-top: 26px; }
+  .hero-bubble            { bottom: calc(16px + env(safe-area-inset-bottom)); width: calc(100% - 40px); max-width: 280px; padding: 13px 18px; font-size: 10px; letter-spacing: 0.12em; }
+  .btn                    { width: 100%; }
 
   .about-shell             { padding: 28px; border-radius: 28px; }
   .about-grid              { gap: 32px; }
+  .about-img               { max-width: none; aspect-ratio: 4 / 4.8; border-radius: 24px; }
   .about-lead              { font-size: 18px; margin: 20px 0; }
   .about-body              { font-size: 15px; line-height: 1.8; }
   .stats-grid              { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
   .stat-card               { padding: 24px; border-radius: 22px; }
   .stat-num                { font-size: clamp(38px, 12vw, 56px); }
+  .clients-list            { gap: 10px; }
+  .client-chip             { width: 100%; justify-content: center; text-align: center; }
 
-  .reel-grid               { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .section-title           { font-size: clamp(26px, 9vw, 40px); }
+  .project-title           { font-size: clamp(28px, 9vw, 40px); }
+  .reel-grid               { grid-template-columns: 1fr; gap: 14px; }
   .reel-item               { border-radius: 22px; }
   .section-head            { flex-direction: column; align-items: flex-start; margin-bottom: 42px; }
   .portfolio-project + .portfolio-project { margin-top: 84px; }
