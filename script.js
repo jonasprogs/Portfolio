@@ -1,6 +1,14 @@
 /* ─── Year ─────────────────────────────────────────────── */
 document.getElementById('year').textContent = new Date().getFullYear();
 
+/* ─── Hero bubble reveal ───────────────────────────────── */
+const heroBubble = document.querySelector('.hero-bubble');
+if (heroBubble) {
+  window.setTimeout(() => {
+    heroBubble.classList.add('visible');
+  }, 2200);
+}
+
 /* ─── Nav – frosted glass on scroll ────────────────────── */
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
@@ -88,16 +96,17 @@ if (statsSection) statsObserver.observe(statsSection);
 const reelObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      document.querySelectorAll('.reel-item').forEach((item, i) => {
+      entry.target.querySelectorAll('.reel-item').forEach((item, i) => {
         setTimeout(() => item.classList.add('animate'), i * 90);
       });
-      reelObserver.disconnect();
+      reelObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.1 });
 
-const reelGrid = document.querySelector('.reel-grid');
-if (reelGrid) reelObserver.observe(reelGrid);
+document.querySelectorAll('.reel-grid').forEach(grid => {
+  reelObserver.observe(grid);
+});
 
 /* ─── About section slide-in ────────────────────────────── */
 const aboutObserver = new IntersectionObserver((entries) => {
@@ -112,39 +121,6 @@ const aboutObserver = new IntersectionObserver((entries) => {
 
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
-
-/* ─── Portfolio category filter ────────────────────────── */
-let activeCategory = 'all';
-
-function applyFilter() {
-  const items = document.querySelectorAll('.reel-item');
-  let visible = 0;
-
-  items.forEach(item => {
-    const match = activeCategory === 'all' || item.dataset.cat === activeCategory;
-    item.classList.remove('animate');
-
-    if (match) {
-      item.style.display = '';
-      const idx = visible;
-      setTimeout(() => item.classList.add('animate'), idx * 80);
-      visible++;
-    } else {
-      item.style.display = 'none';
-    }
-  });
-}
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeCategory = btn.dataset.filter;
-    applyFilter();
-  });
-});
-
-applyFilter();
 
 /* ─── Video autoplay on scroll ──────────────────────────── */
 /*
