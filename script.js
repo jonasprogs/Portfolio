@@ -3,11 +3,30 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 /* ─── Hero bubble reveal ───────────────────────────────── */
 const heroBubble = document.querySelector('.hero-bubble');
+const portfolioSection = document.getElementById('portfolio');
+
+function updateHeroBubble() {
+  if (!heroBubble || !portfolioSection || !heroBubble.dataset.ready) return;
+
+  const portfolioTop = portfolioSection.getBoundingClientRect().top;
+  const fadeStart = window.innerHeight * 0.82;
+  const hideAt = window.innerHeight * 0.62;
+  const shouldFade = portfolioTop <= fadeStart && portfolioTop > hideAt;
+  const shouldShow = portfolioTop > hideAt;
+
+  heroBubble.classList.toggle('is-fading', shouldFade);
+  heroBubble.classList.toggle('visible', shouldShow);
+}
+
 if (heroBubble) {
   window.setTimeout(() => {
-    heroBubble.classList.add('visible');
+    heroBubble.dataset.ready = 'true';
+    updateHeroBubble();
   }, 2200);
 }
+
+window.addEventListener('scroll', updateHeroBubble, { passive: true });
+window.addEventListener('resize', updateHeroBubble);
 
 /* ─── Nav – frosted glass on scroll ────────────────────── */
 const nav = document.getElementById('mainNav');
