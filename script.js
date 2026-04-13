@@ -1,6 +1,57 @@
 /* ─── Year ─────────────────────────────────────────────── */
 document.getElementById('year').textContent = new Date().getFullYear();
 
+/* ─── Hero bubble reveal ───────────────────────────────── */
+const heroBubble = document.querySelector('.hero-bubble');
+const portfolioSection = document.getElementById('portfolio');
+const heroPortfolioLink = document.querySelector('#hero a[href="#portfolio"]');
+
+function scrollToSection(target) {
+  const navHeight = document.getElementById('mainNav')?.offsetHeight || 0;
+  const y = target.getBoundingClientRect().top + window.scrollY - navHeight - 24;
+
+  window.scrollTo({
+    top: Math.max(y, 0),
+    behavior: 'smooth'
+  });
+}
+
+function updateHeroBubble() {
+  if (!heroBubble || !portfolioSection || !heroBubble.dataset.ready) return;
+
+  const portfolioTop = portfolioSection.getBoundingClientRect().top;
+  const fadeStart = window.innerHeight * 0.82;
+  const hideAt = window.innerHeight * 0.62;
+  const shouldFade = portfolioTop <= fadeStart && portfolioTop > hideAt;
+  const shouldShow = portfolioTop > hideAt;
+
+  heroBubble.classList.toggle('is-fading', shouldFade);
+  heroBubble.classList.toggle('visible', shouldShow);
+}
+
+if (heroBubble) {
+  window.setTimeout(() => {
+    heroBubble.dataset.ready = 'true';
+    updateHeroBubble();
+  }, 2200);
+
+  heroBubble.addEventListener('click', (event) => {
+    if (!portfolioSection) return;
+    event.preventDefault();
+    scrollToSection(portfolioSection);
+  });
+}
+
+if (heroPortfolioLink && portfolioSection) {
+  heroPortfolioLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    scrollToSection(portfolioSection);
+  });
+}
+
+window.addEventListener('scroll', updateHeroBubble, { passive: true });
+window.addEventListener('resize', updateHeroBubble);
+
 /* ─── Nav – frosted glass on scroll ────────────────────── */
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
@@ -52,7 +103,7 @@ function countUp(el) {
   const target   = parseInt(el.dataset.target, 10);
   const suffix   = el.dataset.suffix || '';
   const format   = el.dataset.format;
-  const duration = 2200;
+  const duration = 3500;
   const start    = performance.now();
 
   function tick(now) {
@@ -88,16 +139,17 @@ if (statsSection) statsObserver.observe(statsSection);
 const reelObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      document.querySelectorAll('.reel-item').forEach((item, i) => {
+      entry.target.querySelectorAll('.reel-item').forEach((item, i) => {
         setTimeout(() => item.classList.add('animate'), i * 90);
       });
-      reelObserver.disconnect();
+      reelObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.1 });
 
-const reelGrid = document.querySelector('.reel-grid');
-if (reelGrid) reelObserver.observe(reelGrid);
+document.querySelectorAll('.reel-grid').forEach(grid => {
+  reelObserver.observe(grid);
+});
 
 /* ─── About section slide-in ────────────────────────────── */
 const aboutObserver = new IntersectionObserver((entries) => {
@@ -112,39 +164,6 @@ const aboutObserver = new IntersectionObserver((entries) => {
 
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
-
-/* ─── Portfolio category filter ────────────────────────── */
-let activeCategory = 'all';
-
-function applyFilter() {
-  const items = document.querySelectorAll('.reel-item');
-  let visible = 0;
-
-  items.forEach(item => {
-    const match = activeCategory === 'all' || item.dataset.cat === activeCategory;
-    item.classList.remove('animate');
-
-    if (match) {
-      item.style.display = '';
-      const idx = visible;
-      setTimeout(() => item.classList.add('animate'), idx * 80);
-      visible++;
-    } else {
-      item.style.display = 'none';
-    }
-  });
-}
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeCategory = btn.dataset.filter;
-    applyFilter();
-  });
-});
-
-applyFilter();
 
 /* ─── Video autoplay on scroll ──────────────────────────── */
 /*
