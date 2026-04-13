@@ -1,3 +1,6 @@
+/* ─── Helpers ───────────────────────────────────────────── */
+function onMobile() { return window.innerWidth < 768; }
+
 /* ─── Year ─────────────────────────────────────────────── */
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -175,22 +178,48 @@ const aboutObserver = new IntersectionObserver((entries) => {
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
 
-/* ─── Vimeo iframe lazy-loader ──────────────────────────── */
-const iframeLazyObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const iframe = entry.target;
-    if (iframe.dataset.src) {
-      iframe.src = iframe.dataset.src;
-      delete iframe.dataset.src;
-    }
-    iframeLazyObserver.unobserve(iframe);
-  });
-}, { rootMargin: '300px' });   /* start loading 300px before visible */
+/* ─── Vimeo Video Loading ────────────────────────────────── */
+function loadIframe(iframe) {
+  if (iframe.dataset.src) {
+    iframe.src = iframe.dataset.src;
+    delete iframe.dataset.src;
+  }
+}
 
-document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
-  iframeLazyObserver.observe(iframe);
-});
+if (onMobile()) {
+  /* Mobile: tap-to-load — videos only load when user taps */
+  document.querySelectorAll('.reel-item').forEach(item => {
+    const iframe = item.querySelector('iframe.reel-video[data-src]');
+    if (!iframe) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'mobile-play-overlay';
+    overlay.innerHTML =
+      '<div class="mobile-play-icon">' +
+        '<svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>' +
+      '</div>';
+    item.appendChild(overlay);
+
+    overlay.addEventListener('click', () => {
+      loadIframe(iframe);
+      overlay.classList.add('loading');
+      iframe.addEventListener('load', () => overlay.remove(), { once: true });
+    });
+  });
+} else {
+  /* Desktop: lazy-load iframes 400px before they enter viewport */
+  const iframeLazyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      loadIframe(entry.target);
+      iframeLazyObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: '400px' });
+
+  document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
+    iframeLazyObserver.observe(iframe);
+  });
+}
 
 /* ─── Foto-Galerie ──────────────────────────────────────── */
 const FOTOS = [
@@ -292,8 +321,6 @@ const fotoMoreBtn  = document.getElementById('fotoMore');
 const MOBILE_PER_PAGE = 6;
 let   mobileCat       = 'all';
 let   mobileShown     = 0;
-
-function onMobile() { return window.innerWidth < 768; }
 
 /* ── Desktop: build all items at once (shuffled + animated) ── */
 function buildGalleryDesktop() {
