@@ -188,14 +188,58 @@ document.querySelectorAll('.reel-item').forEach(item => {
 });
 
 /* ─── Foto-Galerie ──────────────────────────────────────── */
-// Füge hier die Dateinamen deiner Fotos ein:
 const FOTOS = [
-  // Beispiel: 'fotos/foto1.jpeg', 'fotos/foto2.jpeg', ...
+  // Blacklane
+  { src: 'Bilder%20Blacklane/IMG_0128.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_1565.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_1956.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_1958.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_4453.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_4890.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_5607.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_5612.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_5724.JPG',  cat: 'blacklane' },
+  { src: 'Bilder%20Blacklane/IMG_7310.JPG',  cat: 'blacklane' },
+  // Mercedes-Benz
+  { src: 'Bilder%20Mercedes/DSC02248.jpg',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/DSC02261%20(2).jpg', cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/DSC02386.jpg',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/DSC02447.jpg',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/DSC02556.jpg',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/IMG_0646.JPG',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/IMG_2354.JPG',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/IMG_2396.jpg',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/IMG_2454.JPG',       cat: 'mercedes' },
+  { src: 'Bilder%20Mercedes/IMG_5514.JPG',       cat: 'mercedes' },
+  // Automotive
+  { src: 'Bilder%20Cars/IMG_2938.jpg',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_4140.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_4735.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_4739.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_4957.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_6755.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_7085.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_7225.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_7262.JPG',  cat: 'automotive' },
+  { src: 'Bilder%20Cars/IMG_7263.JPG',  cat: 'automotive' },
+  // Spaces
+  { src: 'Bilder%20Places/IMG_0333.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_1090.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_2392.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_4452.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_4614.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_5267.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_5609.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_7839.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_7842.JPG',  cat: 'spaces' },
+  { src: 'Bilder%20Places/IMG_9345.JPG',  cat: 'spaces' },
 ];
 
-const PER_PAGE   = 12; // 2 Reihen à 6 Fotos
-let   shownCount = 0;
-let   lbIndex    = 0;
+const PER_PAGE      = 12;
+let   shownCount    = 0;
+let   activeFotoCat = 'all';
+let   lbList        = [];
+let   lbIndex       = 0;
 
 const fotoGrid     = document.getElementById('fotoGrid');
 const fotoMoreWrap = document.getElementById('fotoMoreWrap');
@@ -203,9 +247,14 @@ const fotoMoreBtn  = document.getElementById('fotoMore');
 const lightbox     = document.getElementById('lightbox');
 const lbImg        = document.getElementById('lbImg');
 
-function openLightbox(index) {
+function filteredFotos() {
+  return activeFotoCat === 'all' ? FOTOS : FOTOS.filter(f => f.cat === activeFotoCat);
+}
+
+function openLightbox(list, index) {
+  lbList  = list;
   lbIndex = index;
-  lbImg.src = FOTOS[lbIndex];
+  lbImg.src = lbList[lbIndex].src;
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -215,51 +264,54 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
+function lbNavigate(dir) {
+  lbIndex = (lbIndex + dir + lbList.length) % lbList.length;
+  lbImg.src = lbList[lbIndex].src;
+}
+
 document.getElementById('lbClose').addEventListener('click', closeLightbox);
-
-document.getElementById('lbPrev').addEventListener('click', () => {
-  lbIndex = (lbIndex - 1 + FOTOS.length) % FOTOS.length;
-  lbImg.src = FOTOS[lbIndex];
-});
-
-document.getElementById('lbNext').addEventListener('click', () => {
-  lbIndex = (lbIndex + 1) % FOTOS.length;
-  lbImg.src = FOTOS[lbIndex];
-});
-
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) closeLightbox();
-});
+document.getElementById('lbPrev').addEventListener('click', () => lbNavigate(-1));
+document.getElementById('lbNext').addEventListener('click', () => lbNavigate(1));
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
 
 document.addEventListener('keydown', (e) => {
   if (!lightbox.classList.contains('open')) return;
-  if (e.key === 'Escape')      closeLightbox();
-  if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + FOTOS.length) % FOTOS.length; lbImg.src = FOTOS[lbIndex]; }
-  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % FOTOS.length;                lbImg.src = FOTOS[lbIndex]; }
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowLeft')  lbNavigate(-1);
+  if (e.key === 'ArrowRight') lbNavigate(1);
 });
 
-function loadMoreFotos() {
-  const next = FOTOS.slice(shownCount, shownCount + PER_PAGE);
-  next.forEach((src, i) => {
+function renderFotos(reset = false) {
+  const list = filteredFotos();
+  if (reset) { shownCount = 0; fotoGrid.innerHTML = ''; }
+  const next = list.slice(shownCount, shownCount + PER_PAGE);
+  next.forEach((foto, i) => {
+    const idx  = shownCount + i;
     const item = document.createElement('div');
     item.className = 'foto-item';
     const img = document.createElement('img');
-    img.src = src;
-    img.alt = 'Foto';
+    img.src     = foto.src;
+    img.alt     = 'Foto';
     img.loading = 'lazy';
-    const globalIndex = shownCount + i;
-    item.addEventListener('click', () => openLightbox(globalIndex));
+    item.addEventListener('click', () => openLightbox(list, idx));
     item.appendChild(img);
     fotoGrid.appendChild(item);
   });
   shownCount += next.length;
-  fotoMoreWrap.style.display = shownCount < FOTOS.length ? 'block' : 'none';
+  fotoMoreWrap.style.display = shownCount < list.length ? 'block' : 'none';
 }
 
-if (FOTOS.length > 0) {
-  loadMoreFotos();
-  if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', loadMoreFotos);
-}
+document.querySelectorAll('.foto-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.foto-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFotoCat = btn.dataset.cat;
+    renderFotos(true);
+  });
+});
+
+if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', () => renderFotos(false));
+renderFotos();
 
 /* ─── Contact form → Formspree ──────────────────────────── */
 document.getElementById('contactForm').addEventListener('submit', async function (e) {

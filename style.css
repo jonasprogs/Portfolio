@@ -738,7 +738,46 @@ body::before {
 
 #fotos .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 48px;
+}
+
+.foto-filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 40px;
+  border: 1px solid var(--border);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.foto-filter-btn {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--text-2);
+  padding: 10px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+
+.foto-filter-btn:last-child {
+  border-right: none;
+}
+
+.foto-filter-btn:hover {
+  color: var(--white);
+}
+
+.foto-filter-btn.active {
+  background: var(--white);
+  color: var(--bg);
 }
 
 .foto-grid {
