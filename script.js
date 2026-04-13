@@ -175,26 +175,21 @@ const aboutObserver = new IntersectionObserver((entries) => {
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
 
-/* ─── Video autoplay on scroll ──────────────────────────── */
-/*
-  Sobald du ein echtes Video einfügst:
-    <video class="reel-video" src="dein-video.mp4" muted loop playsinline preload="metadata">
-  startet es automatisch, wenn es im Sichtfeld erscheint, und pausiert wenn nicht.
-*/
-const videoPlayObserver = new IntersectionObserver((entries) => {
+/* ─── Vimeo iframe lazy-loader ──────────────────────────── */
+const iframeLazyObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    const video = entry.target.querySelector('.reel-video');
-    if (!video) return;
-    if (entry.isIntersecting) {
-      video.play().catch(() => {});
-    } else {
-      video.pause();
+    if (!entry.isIntersecting) return;
+    const iframe = entry.target;
+    if (iframe.dataset.src) {
+      iframe.src = iframe.dataset.src;
+      delete iframe.dataset.src;
     }
+    iframeLazyObserver.unobserve(iframe);
   });
-}, { threshold: 0.4 });
+}, { rootMargin: '300px' });   /* start loading 300px before visible */
 
-document.querySelectorAll('.reel-item').forEach(item => {
-  videoPlayObserver.observe(item);
+document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
+  iframeLazyObserver.observe(iframe);
 });
 
 /* ─── Foto-Galerie ──────────────────────────────────────── */
@@ -292,75 +287,109 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') lbNavigate(1);
 });
 
-/* build all items once (shuffled) */
-function buildGallery() {
+const fotoMoreWrap = document.getElementById('fotoMoreWrap');
+const fotoMoreBtn  = document.getElementById('fotoMore');
+const MOBILE_PER_PAGE = 6;
+let   mobileCat       = 'all';
+let   mobileShown     = 0;
+
+function onMobile() { return window.innerWidth < 768; }
+
+/* ── Desktop: build all items at once (shuffled + animated) ── */
+function buildGalleryDesktop() {
   shuffle(FOTOS).forEach(foto => {
     const item = document.createElement('div');
     item.className   = 'foto-item';
     item.dataset.cat = foto.cat;
     const img = document.createElement('img');
-    img.src     = foto.src;
-    img.alt     = 'Foto';
-    img.loading = 'lazy';
+    img.src = foto.src; img.alt = 'Foto'; img.loading = 'lazy';
     item.appendChild(img);
     fotoGrid.appendChild(item);
   });
 
-  /* show all with stagger on load */
   const allItems = Array.from(fotoGrid.querySelectorAll('.foto-item'));
-  allItems.forEach((item, i) => {
-    setTimeout(() => item.classList.add('visible'), i * 40);
-  });
-
-  /* click → lightbox with current visible set */
+  allItems.forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 40));
   allItems.forEach(item => {
     item.addEventListener('click', () => {
-      const visible = allItems.filter(el => !el.classList.contains('hidden'));
-      const srcs    = visible.map(el => el.querySelector('img').src);
-      const idx     = visible.indexOf(item);
-      openLightbox(srcs, idx);
+      const vis  = allItems.filter(el => !el.classList.contains('hidden'));
+      openLightbox(vis.map(el => el.querySelector('img').src), vis.indexOf(item));
     });
   });
 }
 
-/* filter with animation */
 function applyFotoFilter(cat) {
   const allItems = Array.from(fotoGrid.querySelectorAll('.foto-item'));
-
-  /* phase 1: exit all visible */
   allItems.forEach(item => {
     if (!item.classList.contains('hidden')) {
       item.classList.remove('visible');
       item.classList.add('exiting');
     }
   });
-
   setTimeout(() => {
     let vi = 0;
     allItems.forEach(item => {
       const match = cat === 'all' || item.dataset.cat === cat;
       item.classList.remove('exiting', 'visible');
-      if (!match) {
-        item.classList.add('hidden');
-      } else {
+      if (!match) { item.classList.add('hidden'); }
+      else {
         item.classList.remove('hidden');
-        const delay = vi * 38;
-        vi++;
-        setTimeout(() => item.classList.add('visible'), delay);
+        setTimeout(() => item.classList.add('visible'), vi++ * 38);
       }
     });
   }, 200);
 }
 
+/* ── Mobile: paginated, simple fade-in ───────────────────── */
+function mobileFotoList() {
+  return mobileCat === 'all' ? FOTOS : FOTOS.filter(f => f.cat === mobileCat);
+}
+
+function buildGalleryMobile(reset = false) {
+  if (reset) { mobileShown = 0; fotoGrid.innerHTML = ''; }
+  const list  = mobileFotoList();
+  const batch = list.slice(mobileShown, mobileShown + MOBILE_PER_PAGE);
+
+  batch.forEach((foto, i) => {
+    const item = document.createElement('div');
+    item.className   = 'foto-item';
+    item.dataset.cat = foto.cat;
+    const img = document.createElement('img');
+    img.src = foto.src; img.alt = 'Foto'; img.loading = 'lazy';
+    item.appendChild(img);
+    fotoGrid.appendChild(item);
+    setTimeout(() => item.classList.add('visible'), i * 60);
+    item.addEventListener('click', () => {
+      const all = Array.from(fotoGrid.querySelectorAll('.foto-item'));
+      openLightbox(all.map(el => el.querySelector('img').src), all.indexOf(item));
+    });
+  });
+
+  mobileShown += batch.length;
+  fotoMoreWrap.style.display = mobileShown < list.length ? 'block' : 'none';
+}
+
+/* ── Filter buttons ──────────────────────────────────────── */
 document.querySelectorAll('.foto-filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.foto-filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    applyFotoFilter(btn.dataset.cat);
+    if (onMobile()) {
+      mobileCat = btn.dataset.cat;
+      buildGalleryMobile(true);
+    } else {
+      applyFotoFilter(btn.dataset.cat);
+    }
   });
 });
 
-buildGallery();
+if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', () => buildGalleryMobile(false));
+
+/* ── Init ────────────────────────────────────────────────── */
+if (onMobile()) {
+  buildGalleryMobile();
+} else {
+  buildGalleryDesktop();
+}
 
 /* ─── Contact form → Formspree ──────────────────────────── */
 document.getElementById('contactForm').addEventListener('submit', async function (e) {
