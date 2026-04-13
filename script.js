@@ -178,7 +178,7 @@ const aboutObserver = new IntersectionObserver((entries) => {
 const aboutSection = document.getElementById('about');
 if (aboutSection) aboutObserver.observe(aboutSection);
 
-/* ─── Vimeo Video Loading ────────────────────────────────── */
+/* ─── Vimeo iframe loading ───────────────────────────────── */
 function loadIframe(iframe) {
   if (iframe.dataset.src) {
     iframe.src = iframe.dataset.src;
@@ -186,40 +186,20 @@ function loadIframe(iframe) {
   }
 }
 
-if (onMobile()) {
-  /* Mobile: tap-to-load — videos only load when user taps */
-  document.querySelectorAll('.reel-item').forEach(item => {
-    const iframe = item.querySelector('iframe.reel-video[data-src]');
-    if (!iframe) return;
-
-    const overlay = document.createElement('div');
-    overlay.className = 'mobile-play-overlay';
-    overlay.innerHTML =
-      '<div class="mobile-play-icon">' +
-        '<svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>' +
-      '</div>';
-    item.appendChild(overlay);
-
-    overlay.addEventListener('click', () => {
-      loadIframe(iframe);
-      overlay.classList.add('loading');
-      iframe.addEventListener('load', () => overlay.remove(), { once: true });
-    });
+/* Load iframes only when they actually enter the viewport.
+   This ensures Mercedes (top of page) loads first, Blacklane
+   only loads when the user scrolls down to it. */
+const iframeLazyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    loadIframe(entry.target);
+    iframeLazyObserver.unobserve(entry.target);
   });
-} else {
-  /* Desktop: lazy-load iframes 400px before they enter viewport */
-  const iframeLazyObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      loadIframe(entry.target);
-      iframeLazyObserver.unobserve(entry.target);
-    });
-  }, { rootMargin: '400px' });
+}, { rootMargin: '80px' });  /* small margin — load just before visible */
 
-  document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
-    iframeLazyObserver.observe(iframe);
-  });
-}
+document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
+  iframeLazyObserver.observe(iframe);
+});
 
 /* ─── Foto-Galerie ──────────────────────────────────────── */
 const FOTOS = [
