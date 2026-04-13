@@ -793,6 +793,24 @@ body::before {
   overflow: hidden;
   cursor: pointer;
   background: var(--bg-3);
+  opacity: 0;
+  transform: scale(0.93) translateY(10px);
+  transition: opacity 0.32s ease, transform 0.32s ease;
+}
+
+.foto-item.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.foto-item.exiting {
+  opacity: 0;
+  transform: scale(0.93);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.foto-item.hidden {
+  display: none;
 }
 
 .foto-item img {

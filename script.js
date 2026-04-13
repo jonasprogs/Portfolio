@@ -235,26 +235,28 @@ const FOTOS = [
   { src: 'Bilder%20Places/IMG_9345.JPG',  cat: 'spaces' },
 ];
 
-const PER_PAGE      = 12;
-let   shownCount    = 0;
-let   activeFotoCat = 'all';
-let   lbList        = [];
-let   lbIndex       = 0;
+let lbSrcs  = [];
+let lbIndex = 0;
 
-const fotoGrid     = document.getElementById('fotoGrid');
-const fotoMoreWrap = document.getElementById('fotoMoreWrap');
-const fotoMoreBtn  = document.getElementById('fotoMore');
-const lightbox     = document.getElementById('lightbox');
-const lbImg        = document.getElementById('lbImg');
+const fotoGrid = document.getElementById('fotoGrid');
+const lightbox = document.getElementById('lightbox');
+const lbImg    = document.getElementById('lbImg');
 
-function filteredFotos() {
-  return activeFotoCat === 'all' ? FOTOS : FOTOS.filter(f => f.cat === activeFotoCat);
+/* shuffle helper */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
-function openLightbox(list, index) {
-  lbList  = list;
+/* lightbox */
+function openLightbox(srcs, index) {
+  lbSrcs  = srcs;
   lbIndex = index;
-  lbImg.src = lbList[lbIndex].src;
+  lbImg.src = lbSrcs[lbIndex];
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -265,53 +267,90 @@ function closeLightbox() {
 }
 
 function lbNavigate(dir) {
-  lbIndex = (lbIndex + dir + lbList.length) % lbList.length;
-  lbImg.src = lbList[lbIndex].src;
+  lbIndex = (lbIndex + dir + lbSrcs.length) % lbSrcs.length;
+  lbImg.src = lbSrcs[lbIndex];
 }
 
 document.getElementById('lbClose').addEventListener('click', closeLightbox);
 document.getElementById('lbPrev').addEventListener('click', () => lbNavigate(-1));
 document.getElementById('lbNext').addEventListener('click', () => lbNavigate(1));
-lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-
-document.addEventListener('keydown', (e) => {
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
   if (!lightbox.classList.contains('open')) return;
   if (e.key === 'Escape')     closeLightbox();
   if (e.key === 'ArrowLeft')  lbNavigate(-1);
   if (e.key === 'ArrowRight') lbNavigate(1);
 });
 
-function renderFotos(reset = false) {
-  const list = filteredFotos();
-  if (reset) { shownCount = 0; fotoGrid.innerHTML = ''; }
-  const next = list.slice(shownCount, shownCount + PER_PAGE);
-  next.forEach((foto, i) => {
-    const idx  = shownCount + i;
+/* build all items once (shuffled) */
+function buildGallery() {
+  shuffle(FOTOS).forEach(foto => {
     const item = document.createElement('div');
-    item.className = 'foto-item';
+    item.className   = 'foto-item';
+    item.dataset.cat = foto.cat;
     const img = document.createElement('img');
     img.src     = foto.src;
     img.alt     = 'Foto';
     img.loading = 'lazy';
-    item.addEventListener('click', () => openLightbox(list, idx));
     item.appendChild(img);
     fotoGrid.appendChild(item);
   });
-  shownCount += next.length;
-  fotoMoreWrap.style.display = shownCount < list.length ? 'block' : 'none';
+
+  /* show all with stagger on load */
+  const allItems = Array.from(fotoGrid.querySelectorAll('.foto-item'));
+  allItems.forEach((item, i) => {
+    setTimeout(() => item.classList.add('visible'), i * 40);
+  });
+
+  /* click → lightbox with current visible set */
+  allItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const visible = allItems.filter(el => !el.classList.contains('hidden'));
+      const srcs    = visible.map(el => el.querySelector('img').src);
+      const idx     = visible.indexOf(item);
+      openLightbox(srcs, idx);
+    });
+  });
+}
+
+/* filter with animation */
+function applyFotoFilter(cat) {
+  const allItems = Array.from(fotoGrid.querySelectorAll('.foto-item'));
+
+  /* phase 1: exit all visible */
+  allItems.forEach(item => {
+    if (!item.classList.contains('hidden')) {
+      item.classList.remove('visible');
+      item.classList.add('exiting');
+    }
+  });
+
+  setTimeout(() => {
+    let vi = 0;
+    allItems.forEach(item => {
+      const match = cat === 'all' || item.dataset.cat === cat;
+      item.classList.remove('exiting', 'visible');
+      if (!match) {
+        item.classList.add('hidden');
+      } else {
+        item.classList.remove('hidden');
+        const delay = vi * 38;
+        vi++;
+        setTimeout(() => item.classList.add('visible'), delay);
+      }
+    });
+  }, 200);
 }
 
 document.querySelectorAll('.foto-filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.foto-filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    activeFotoCat = btn.dataset.cat;
-    renderFotos(true);
+    applyFotoFilter(btn.dataset.cat);
   });
 });
 
-if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', () => renderFotos(false));
-renderFotos();
+buildGallery();
 
 /* ─── Contact form → Formspree ──────────────────────────── */
 document.getElementById('contactForm').addEventListener('submit', async function (e) {
