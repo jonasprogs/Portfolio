@@ -88,11 +88,21 @@ function observe(selector, callback, options = {}) {
   return observer;
 }
 
-/* ─── Generic scroll reveals ────────────────────────────── */
-observe('.reveal', (el, obs) => {
-  el.classList.add('visible');
-  obs.unobserve(el);
-});
+/* ─── Generic scroll reveals (bidirectional) ────────────── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      entry.target.classList.remove('gone');
+    } else if (entry.boundingClientRect.top < 0) {
+      // scrolled past — fade out upward
+      entry.target.classList.add('gone');
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 /* ─── Stats counter animation ───────────────────────────── */
 function easeOutCubic(t) {

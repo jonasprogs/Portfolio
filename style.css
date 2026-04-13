@@ -1125,13 +1125,22 @@ footer {
 /* ─── SCROLL REVEAL ───────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(28px);
+  transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* fades out when scrolled past — slides slightly upward */
+.reveal.gone {
+  opacity: 0;
+  transform: translateY(-14px);
+  transition: opacity 0.38s ease, transform 0.38s ease;
+  transition-delay: 0s !important;
 }
 
 .reveal.delay-1 { transition-delay: 0.1s; }
