@@ -153,7 +153,7 @@ const reelObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.querySelectorAll('.reel-item').forEach((item, i) => {
-        setTimeout(() => item.classList.add('animate'), i * 110);
+        setTimeout(() => item.classList.add('animate'), 900 + i * 160);
       });
       reelObserver.unobserve(entry.target);
     }
@@ -195,7 +195,7 @@ const iframeLazyObserver = new IntersectionObserver((entries) => {
     loadIframe(entry.target);
     iframeLazyObserver.unobserve(entry.target);
   });
-}, { rootMargin: '80px' });  /* small margin — load just before visible */
+}, { rootMargin: '400px' });  /* large margin — preload iframes well before visible */
 
 document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
   iframeLazyObserver.observe(iframe);
