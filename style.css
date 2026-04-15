@@ -500,13 +500,13 @@ body::before {
   border: none;
   box-shadow: none;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateX(32px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
 .reel-item.animate {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .reel-item:hover .reel-placeholder { transform: scale(1.04); }

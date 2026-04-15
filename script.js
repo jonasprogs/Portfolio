@@ -148,17 +148,17 @@ const statsObserver = new IntersectionObserver((entries) => {
 const statsSection = document.getElementById('stats');
 if (statsSection) statsObserver.observe(statsSection);
 
-/* ─── Portfolio staggered reveal ────────────────────────── */
+/* ─── Portfolio: left-to-right stagger reveal ───────────── */
 const reelObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.querySelectorAll('.reel-item').forEach((item, i) => {
-        setTimeout(() => item.classList.add('animate'), i * 90);
+        setTimeout(() => item.classList.add('animate'), i * 110);
       });
       reelObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.05 });
 
 document.querySelectorAll('.reel-grid').forEach(grid => {
   reelObserver.observe(grid);
