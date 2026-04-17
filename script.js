@@ -155,41 +155,50 @@ function revealGridLeftToRight(grid) {
   });
 }
 
-function awaitVimeoPlaying(iframe) {
-  return new Promise(resolve => {
+/* Track per-grid how many videos are ready */
+function setupGridPreload(grid) {
+  const iframes = Array.from(grid.querySelectorAll('iframe.reel-video[data-src]'));
+
+  if (!iframes.length || typeof Vimeo === 'undefined') {
+    revealGridLeftToRight(grid);
+    return;
+  }
+
+  let readyCount = 0;
+  let revealed   = false;
+
+  function onReady() {
+    readyCount++;
+    if (!revealed && readyCount >= iframes.length) {
+      revealed = true;
+      revealGridLeftToRight(grid);
+    }
+  }
+
+  /* 5-second fallback */
+  setTimeout(() => { if (!revealed) { revealed = true; revealGridLeftToRight(grid); } }, 5000);
+
+  iframes.forEach(iframe => {
+    loadIframe(iframe); /* set src — listeners below catch the playing event */
     try {
       const player = new Vimeo.Player(iframe);
-      player.on('playing', function handler() {
-        player.off('playing', handler);
-        resolve();
-      });
-      player.on('error', resolve);
+      player.on('playing', function handler() { player.off('playing', handler); onReady(); });
+      player.on('error', onReady);
     } catch (e) {
-      resolve();
+      onReady();
     }
   });
 }
 
-/* Wait for all videos in a grid to play, then reveal left-to-right */
+/* Observer fires 400px before viewport — loads iframes AND attaches listeners
+   at the same time, so no playing-event can be missed */
 const reelObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     reelObserver.unobserve(entry.target);
-
-    const grid = entry.target;
-    const iframes = Array.from(grid.querySelectorAll('iframe.reel-video'));
-    iframes.forEach(loadIframe); /* ensure src is set if lazy loader hasn't fired */
-
-    if (!iframes.length || typeof Vimeo === 'undefined') {
-      revealGridLeftToRight(grid);
-      return;
-    }
-
-    const timeout  = new Promise(resolve => setTimeout(resolve, 5000));
-    const allReady = Promise.all(iframes.map(awaitVimeoPlaying));
-    Promise.race([allReady, timeout]).then(() => revealGridLeftToRight(grid));
+    setupGridPreload(entry.target);
   });
-}, { threshold: 0.05 });
+}, { rootMargin: '400px' });
 
 document.querySelectorAll('.reel-grid').forEach(grid => reelObserver.observe(grid));
 
@@ -214,19 +223,6 @@ function loadIframe(iframe) {
     delete iframe.dataset.src;
   }
 }
-
-/* Preload iframes 400px before viewport so videos buffer early */
-const iframeLazyObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    loadIframe(entry.target);
-    iframeLazyObserver.unobserve(entry.target);
-  });
-}, { rootMargin: '400px' });
-
-document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
-  iframeLazyObserver.observe(iframe);
-});
 
 /* ─── Foto-Galerie ──────────────────────────────────────── */
 const FOTOS = [
