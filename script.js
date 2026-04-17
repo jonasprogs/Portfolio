@@ -173,30 +173,65 @@ function setupGridPreload(grid) {
     return;
   }
 
-  let readyCount = 0;
-  let revealed   = false;
+  if (onMobile()) {
+    /* Mobile: each iframe loads and reveals individually as it enters viewport */
+    iframes.forEach(iframe => {
+      const itemObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          itemObs.unobserve(entry.target);
+          loadIframe(entry.target);
 
-  function onReady() {
-    readyCount++;
-    if (!revealed && readyCount >= iframes.length) {
-      revealed = true;
-      revealGridLeftToRight(grid);
+          const item = entry.target.closest('.reel-item');
+          if (!item) return;
+
+          let done = false;
+          const fallback = setTimeout(() => { if (!done) { done = true; item.classList.add('animate'); } }, 5000);
+
+          try {
+            const player = new Vimeo.Player(entry.target);
+            player.on('playing', function handler() {
+              player.off('playing', handler);
+              if (!done) { done = true; clearTimeout(fallback); item.classList.add('animate'); }
+            });
+            player.on('error', () => {
+              if (!done) { done = true; clearTimeout(fallback); item.classList.add('animate'); }
+            });
+          } catch (e) {
+            done = true; clearTimeout(fallback); item.classList.add('animate');
+          }
+        });
+      }, { rootMargin: '100px' });
+
+      itemObs.observe(iframe);
+    });
+
+  } else {
+    /* Desktop: load all together, wait for all to play, then reveal left-to-right */
+    let readyCount = 0;
+    let revealed   = false;
+
+    function onReady() {
+      readyCount++;
+      if (!revealed && readyCount >= iframes.length) {
+        revealed = true;
+        revealGridLeftToRight(grid);
+      }
     }
+
+    setTimeout(() => { if (!revealed) { revealed = true; revealGridLeftToRight(grid); } }, 5000);
+
+    iframes.forEach(iframe => {
+      loadIframe(iframe);
+      try {
+        const player = new Vimeo.Player(iframe);
+        player.on('playing', function handler() { player.off('playing', handler); onReady(); });
+        player.on('error', onReady);
+      } catch (e) {
+        onReady();
+      }
+    });
   }
-
-  /* 5-second fallback */
-  setTimeout(() => { if (!revealed) { revealed = true; revealGridLeftToRight(grid); } }, 5000);
-
-  iframes.forEach(iframe => {
-    loadIframe(iframe); /* set src — listeners below catch the playing event */
-    try {
-      const player = new Vimeo.Player(iframe);
-      player.on('playing', function handler() { player.off('playing', handler); onReady(); });
-      player.on('error', onReady);
-    } catch (e) {
-      onReady();
-    }
-  });
 }
 
 /* Observer fires 400px before viewport — loads iframes AND attaches listeners
