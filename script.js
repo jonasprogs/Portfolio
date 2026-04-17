@@ -1,6 +1,15 @@
 /* ─── Helpers ───────────────────────────────────────────── */
 function onMobile() { return window.innerWidth < 768; }
 
+/* ─── Intro Overlay ──────────────────────────────────────── */
+const siteOverlay = document.getElementById('siteOverlay');
+if (siteOverlay) {
+  setTimeout(() => {
+    siteOverlay.classList.add('fade-out');
+    siteOverlay.addEventListener('transitionend', () => siteOverlay.remove(), { once: true });
+  }, 1500);
+}
+
 /* ─── Year ─────────────────────────────────────────────── */
 document.getElementById('year').textContent = new Date().getFullYear();
 

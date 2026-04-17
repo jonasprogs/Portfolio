@@ -35,6 +35,51 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ─── Intro Overlay ─────────────────────────────────────── */
+#siteOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+}
+
+#siteOverlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay-content {
+  text-align: center;
+  animation: overlayIn 0.9s ease forwards;
+}
+
+.overlay-name {
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.overlay-sub {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 body::before {
   content: '';
   position: fixed;
