@@ -148,21 +148,50 @@ const statsObserver = new IntersectionObserver((entries) => {
 const statsSection = document.getElementById('stats');
 if (statsSection) statsObserver.observe(statsSection);
 
-/* ─── Portfolio: left-to-right stagger reveal ───────────── */
+/* ─── Portfolio: buffer-aware left-to-right reveal ──────── */
+function revealGridLeftToRight(grid) {
+  grid.querySelectorAll('.reel-item').forEach((item, i) => {
+    setTimeout(() => item.classList.add('animate'), i * 180);
+  });
+}
+
+function awaitVimeoPlaying(iframe) {
+  return new Promise(resolve => {
+    try {
+      const player = new Vimeo.Player(iframe);
+      player.on('playing', function handler() {
+        player.off('playing', handler);
+        resolve();
+      });
+      player.on('error', resolve);
+    } catch (e) {
+      resolve();
+    }
+  });
+}
+
+/* Wait for all videos in a grid to play, then reveal left-to-right */
 const reelObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.reel-item').forEach((item, i) => {
-        setTimeout(() => item.classList.add('animate'), 900 + i * 160);
-      });
-      reelObserver.unobserve(entry.target);
+    if (!entry.isIntersecting) return;
+    reelObserver.unobserve(entry.target);
+
+    const grid = entry.target;
+    const iframes = Array.from(grid.querySelectorAll('iframe.reel-video'));
+    iframes.forEach(loadIframe); /* ensure src is set if lazy loader hasn't fired */
+
+    if (!iframes.length || typeof Vimeo === 'undefined') {
+      revealGridLeftToRight(grid);
+      return;
     }
+
+    const timeout  = new Promise(resolve => setTimeout(resolve, 5000));
+    const allReady = Promise.all(iframes.map(awaitVimeoPlaying));
+    Promise.race([allReady, timeout]).then(() => revealGridLeftToRight(grid));
   });
 }, { threshold: 0.05 });
 
-document.querySelectorAll('.reel-grid').forEach(grid => {
-  reelObserver.observe(grid);
-});
+document.querySelectorAll('.reel-grid').forEach(grid => reelObserver.observe(grid));
 
 /* ─── About section slide-in ────────────────────────────── */
 const aboutObserver = new IntersectionObserver((entries) => {
@@ -186,16 +215,14 @@ function loadIframe(iframe) {
   }
 }
 
-/* Load iframes only when they actually enter the viewport.
-   This ensures Mercedes (top of page) loads first, Blacklane
-   only loads when the user scrolls down to it. */
+/* Preload iframes 400px before viewport so videos buffer early */
 const iframeLazyObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     loadIframe(entry.target);
     iframeLazyObserver.unobserve(entry.target);
   });
-}, { rootMargin: '400px' });  /* large margin — preload iframes well before visible */
+}, { rootMargin: '400px' });
 
 document.querySelectorAll('iframe.reel-video[data-src]').forEach(iframe => {
   iframeLazyObserver.observe(iframe);
