@@ -273,7 +273,7 @@ body::before {
 .hero-inner {
   display: grid;
   grid-template-columns: 55% 45%;
-  min-height: 500px;
+  min-height: 380px;
   align-items: stretch;
 }
 
@@ -306,7 +306,7 @@ body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.35);
   pointer-events: none;
 }
 
