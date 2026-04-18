@@ -264,74 +264,58 @@ body::before {
 
 /* ─── HERO ────────────────────────────────────────────── */
 #hero {
-  display: block;
-  padding: 0;
-  overflow: hidden;
   position: relative;
-}
-
-.hero-inner {
-  display: grid;
-  grid-template-columns: 52fr 48fr;
-  min-height: 500px;
-  align-items: stretch;
-}
-
-/* Text column — padding-top clears the fixed nav */
-.hero-text {
+  min-height: 520px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: 120px 56px 64px 60px;
-  background: var(--bg);
-  position: relative;
-  z-index: 1;
-}
-
-/* Smooth gradient blending text bg into portrait */
-.hero-text::after {
-  content: '';
-  position: absolute;
-  top: 0; right: -64px; bottom: 0;
-  width: 64px;
-  background: linear-gradient(to right, var(--bg), transparent);
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Portrait bleeds from very top of page — nav overlays it */
-.hero-portrait {
-  position: relative;
   overflow: hidden;
+  padding: 0;
+  text-align: center;
 }
 
-.hero-portrait::before {
-  content: '';
+/* Full-bleed background portrait */
+.hero-bg {
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 140px;
-  background: linear-gradient(to right, var(--bg), transparent);
-  z-index: 1;
-  pointer-events: none;
+  inset: 0;
+  z-index: 0;
 }
 
-/* Bottom fade so hero blends into next section */
-.hero-portrait::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 0;
-  height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-  z-index: 1;
-  pointer-events: none;
-}
-
-.hero-portrait img {
+.hero-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 15%;
+  object-position: center 20%;
   display: block;
+}
+
+/* 50% black overlay */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Bottom fade into next section */
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 60px 80px;
+  max-width: 680px;
 }
 
 .hero-eyebrow {
@@ -339,14 +323,14 @@ body::before {
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: rgba(255,255,255,0.5);
   margin-bottom: 20px;
   opacity: 0;
   animation: heroFade 0.8s ease forwards 0.2s;
 }
 
 .hero-headline {
-  font-size: clamp(40px, 5.2vw, 72px);
+  font-size: clamp(42px, 6vw, 80px);
   font-weight: 200;
   letter-spacing: -0.03em;
   line-height: 1.0;
@@ -356,11 +340,11 @@ body::before {
 }
 
 .hero-sub {
-  font-size: clamp(13px, 1.4vw, 16px);
+  font-size: clamp(13px, 1.5vw, 16px);
   font-weight: 300;
-  color: var(--text-2);
-  margin-top: 18px;
-  max-width: 360px;
+  color: rgba(255,255,255,0.65);
+  margin-top: 20px;
+  max-width: 380px;
   line-height: 1.7;
   opacity: 0;
   animation: heroFade 0.8s ease forwards 0.7s;
@@ -369,8 +353,9 @@ body::before {
 .hero-ctas {
   display: flex;
   gap: 14px;
-  margin-top: 32px;
+  margin-top: 36px;
   flex-wrap: wrap;
+  justify-content: center;
   opacity: 0;
   animation: heroFade 0.8s ease forwards 0.9s;
 }
@@ -1248,8 +1233,8 @@ footer {
   .nav         { padding: 24px 40px; }
   .nav.scrolled{ padding: 16px 40px; }
 
-  .hero-inner  { min-height: 360px; }
-  .hero-text   { padding: 100px 40px 52px; }
+  #hero        { min-height: 440px; }
+  .hero-text   { padding: 110px 40px 72px; }
 
   #portfolio,
   #about,
@@ -1270,37 +1255,14 @@ footer {
   .nav-menu  { display: none; }
   .hamburger { display: flex; }
 
-  #hero    { padding: 0; min-height: unset; }
+  #hero    { min-height: 380px; }
   #portfolio,
   #about,
   #contact { padding: 80px 24px; }
   footer   { padding: 28px 24px; }
 
-  /* Mobile hero: portrait on top, text below */
-  .hero-inner {
-    grid-template-columns: 1fr;
-    min-height: unset;
-    padding-top: 0;
-  }
-  .hero-portrait {
-    height: 55vw;
-    min-height: 180px;
-    max-height: 280px;
-    order: -1;
-  }
-  .hero-portrait::before { display: none; }
-  .hero-portrait::after {
-    content: '';
-    position: absolute;
-    inset: auto 0 0;
-    height: 90px;
-    background: linear-gradient(to bottom, transparent, var(--bg));
-    z-index: 1;
-    pointer-events: none;
-  }
   .hero-text {
-    padding: 20px 24px 40px;
-    background: var(--bg);
+    padding: 100px 24px 72px;
   }
 
   .hero-eyebrow           { letter-spacing: 0.18em; margin-bottom: 16px; }
