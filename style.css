@@ -273,7 +273,7 @@ body::before {
 .hero-inner {
   display: grid;
   grid-template-columns: 55fr 45fr;
-  min-height: 540px;
+  min-height: 380px;
   padding-top: 80px;
 }
 
@@ -281,7 +281,7 @@ body::before {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px 60px 60px 60px;
+  padding: 36px 52px 36px 60px;
   background: var(--bg);
 }
 
@@ -1222,8 +1222,8 @@ footer {
   .nav         { padding: 24px 40px; }
   .nav.scrolled{ padding: 16px 40px; }
 
-  .hero-inner  { min-height: 460px; padding-top: 72px; }
-  .hero-text   { padding: 48px 40px; }
+  .hero-inner  { min-height: 320px; padding-top: 72px; }
+  .hero-text   { padding: 32px 36px; }
 
   #portfolio,
   #about,
@@ -1257,9 +1257,9 @@ footer {
     padding-top: 0;
   }
   .hero-portrait {
-    height: 72vw;
-    min-height: 240px;
-    max-height: 380px;
+    height: 55vw;
+    min-height: 180px;
+    max-height: 280px;
     order: -1;
   }
   .hero-portrait::before { display: none; }
