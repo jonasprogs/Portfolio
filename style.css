@@ -272,32 +272,22 @@ body::before {
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 58fr 42fr;
+  grid-template-columns: 55% 45%;
   min-height: 500px;
   align-items: stretch;
 }
 
+/* ── linke Spalte: ganzer Text ── */
 .hero-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 120px 56px 64px 60px;
+  text-align: left;
+  padding: 120px 60px 64px 60px;
   background: var(--bg);
-  position: relative;
-  z-index: 1;
 }
 
-/* gradient blending text into portrait */
-.hero-text::after {
-  content: '';
-  position: absolute;
-  top: 0; right: -50px; bottom: 0;
-  width: 50px;
-  background: linear-gradient(to right, var(--bg), transparent);
-  pointer-events: none;
-  z-index: 2;
-}
-
+/* ── rechte Spalte: Portrait ── */
 .hero-portrait {
   position: relative;
   overflow: hidden;
@@ -311,7 +301,7 @@ body::before {
   display: block;
 }
 
-/* 50% dark overlay on portrait */
+/* 50% dunkles Overlay auf Portrait */
 .hero-portrait::after {
   content: '';
   position: absolute;
@@ -320,12 +310,12 @@ body::before {
   pointer-events: none;
 }
 
-/* left gradient blend */
+/* linker Gradient: Portrait läuft sanft ins Dunkle */
 .hero-portrait::before {
   content: '';
   position: absolute;
   inset: 0 auto 0 0;
-  width: 120px;
+  width: 100px;
   background: linear-gradient(to right, var(--bg), transparent);
   z-index: 1;
   pointer-events: none;
