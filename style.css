@@ -272,8 +272,8 @@ body::before {
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 60fr 40fr;
-  min-height: 420px;
+  grid-template-columns: 52fr 48fr;
+  min-height: 500px;
   align-items: stretch;
 }
 
