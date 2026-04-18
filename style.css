@@ -273,7 +273,7 @@ body::before {
 .hero-inner {
   display: grid;
   grid-template-columns: 55% 45%;
-  min-height: 380px;
+  min-height: 230px;
   align-items: stretch;
 }
 
@@ -283,7 +283,7 @@ body::before {
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  padding: 120px 60px 64px 60px;
+  padding: 100px 60px 40px 60px;
   background: var(--bg);
 }
 
@@ -1235,8 +1235,8 @@ footer {
   .nav         { padding: 24px 40px; }
   .nav.scrolled{ padding: 16px 40px; }
 
-  #hero        { min-height: 440px; }
-  .hero-text   { padding: 110px 40px 72px; }
+  #hero        { min-height: 200px; }
+  .hero-text   { padding: 90px 40px 36px; }
 
   #portfolio,
   #about,
