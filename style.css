@@ -272,7 +272,7 @@ body::before {
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 55fr 45fr;
+  grid-template-columns: 68fr 32fr;
   min-height: 380px;
   padding-top: 80px;
 }

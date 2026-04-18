@@ -174,7 +174,7 @@ function setupGridPreload(grid) {
   }
 
   if (onMobile()) {
-    /* Mobile: each iframe loads and reveals individually as it enters viewport */
+    /* Mobile: each iframe loads individually, reveals on first timeupdate */
     iframes.forEach(iframe => {
       const itemObs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -186,12 +186,12 @@ function setupGridPreload(grid) {
           if (!item) return;
 
           let done = false;
-          const fallback = setTimeout(() => { if (!done) { done = true; item.classList.add('animate'); } }, 5000);
+          const fallback = setTimeout(() => { if (!done) { done = true; item.classList.add('animate'); } }, 6000);
 
           try {
             const player = new Vimeo.Player(entry.target);
-            player.on('playing', function handler() {
-              player.off('playing', handler);
+            player.on('timeupdate', function handler() {
+              player.off('timeupdate', handler);
               if (!done) { done = true; clearTimeout(fallback); item.classList.add('animate'); }
             });
             player.on('error', () => {
@@ -201,13 +201,13 @@ function setupGridPreload(grid) {
             done = true; clearTimeout(fallback); item.classList.add('animate');
           }
         });
-      }, { rootMargin: '100px' });
+      }, { rootMargin: '200px' });
 
       itemObs.observe(iframe);
     });
 
   } else {
-    /* Desktop: load all together, wait for all to play, then reveal left-to-right */
+    /* Desktop: load all at once, wait for all to timeupdate, then reveal left-to-right */
     let readyCount = 0;
     let revealed   = false;
 
@@ -219,13 +219,13 @@ function setupGridPreload(grid) {
       }
     }
 
-    setTimeout(() => { if (!revealed) { revealed = true; revealGridLeftToRight(grid); } }, 5000);
+    setTimeout(() => { if (!revealed) { revealed = true; revealGridLeftToRight(grid); } }, 7000);
 
     iframes.forEach(iframe => {
       loadIframe(iframe);
       try {
         const player = new Vimeo.Player(iframe);
-        player.on('playing', function handler() { player.off('playing', handler); onReady(); });
+        player.on('timeupdate', function handler() { player.off('timeupdate', handler); onReady(); });
         player.on('error', onReady);
       } catch (e) {
         onReady();
@@ -234,15 +234,14 @@ function setupGridPreload(grid) {
   }
 }
 
-/* Observer fires 400px before viewport — loads iframes AND attaches listeners
-   at the same time, so no playing-event can be missed */
+/* 1200px rootMargin — iframes start loading well before viewport */
 const reelObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     reelObserver.unobserve(entry.target);
     setupGridPreload(entry.target);
   });
-}, { rootMargin: '400px' });
+}, { rootMargin: '1200px' });
 
 document.querySelectorAll('.reel-grid').forEach(grid => reelObserver.observe(grid));
 
