@@ -1269,8 +1269,9 @@ footer {
 
   .section-title           { font-size: clamp(28px, 7vw, 44px); }
   .project-title           { font-size: clamp(30px, 7.5vw, 44px); }
-  .reel-grid               { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; }
-  .reel-item               { border-radius: 0; }
+  .reel-grid               { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 6px; padding-bottom: 2px; }
+  .reel-grid::-webkit-scrollbar { display: none; }
+  .reel-item               { flex: 0 0 44vw; width: 44vw; border-radius: 0; }
   .section-head            { flex-direction: column; align-items: flex-start; margin-bottom: 42px; }
   .portfolio-project + .portfolio-project { margin-top: 84px; }
 
@@ -1287,5 +1288,5 @@ footer {
 
   .about-shell { padding: 28px; border-radius: 28px; }
   .stats-grid  { grid-template-columns: 1fr; }
-  .reel-grid   { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .reel-item   { flex: 0 0 62vw; width: 62vw; }
 }
