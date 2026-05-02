@@ -190,6 +190,7 @@ function setupGridPreload(grid) {
 
           try {
             const player = new Vimeo.Player(entry.target);
+            player.setQuality('360p').catch(() => {});
             player.on('playing', function handler() {
               player.off('playing', handler);
               if (!done) { done = true; clearTimeout(fallback); item.classList.add('animate'); }
