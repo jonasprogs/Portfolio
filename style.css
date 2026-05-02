@@ -1187,6 +1187,29 @@ footer {
   color: var(--text-2);
 }
 
+/* ─── REEL SCROLL WRAP (mobile scroll indicator) ─────── */
+.reel-scroll-wrap {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .reel-scroll-wrap::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 2px;
+    width: 64px;
+    background: linear-gradient(to right, transparent, rgba(10, 10, 10, 0.75));
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity 0.35s ease;
+  }
+  .reel-scroll-wrap.at-end::after {
+    opacity: 0;
+  }
+}
+
 /* ─── SCROLL REVEAL ───────────────────────────────────── */
 .reveal {
   opacity: 0;

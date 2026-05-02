@@ -471,8 +471,12 @@ function applyFotoFilter(cat) {
 }
 
 /* ── Mobile: paginated, simple fade-in ───────────────────── */
+let shuffledMobileFotos = null;
+
 function mobileFotoList() {
-  return mobileCat === 'all' ? FOTOS : FOTOS.filter(f => f.cat === mobileCat);
+  if (mobileCat !== 'all') return FOTOS.filter(f => f.cat === mobileCat);
+  if (!shuffledMobileFotos) shuffledMobileFotos = shuffle(FOTOS);
+  return shuffledMobileFotos;
 }
 
 function buildGalleryMobile(reset = false) {
@@ -517,6 +521,17 @@ if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', () => buildGalleryMobile(
 
 /* ── Init ────────────────────────────────────────────────── */
 if (onMobile()) {
+  /* Wrap each reel-grid in a scroll-indicator container */
+  document.querySelectorAll('.reel-grid').forEach(grid => {
+    const wrap = document.createElement('div');
+    wrap.className = 'reel-scroll-wrap';
+    grid.parentNode.insertBefore(wrap, grid);
+    wrap.appendChild(grid);
+    grid.addEventListener('scroll', () => {
+      const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 20;
+      wrap.classList.toggle('at-end', atEnd);
+    }, { passive: true });
+  });
   buildGalleryMobile();
 } else {
   buildGalleryDesktop();
