@@ -522,6 +522,9 @@ if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', () => buildGalleryMobile(
 
 /* ── Init ────────────────────────────────────────────────── */
 if (onMobile()) {
+  /* Show reel-items immediately so animate-hint reveals real content */
+  document.querySelectorAll('.reel-item').forEach(item => item.classList.add('animate'));
+
   /* Wrap each reel-grid in a scroll-indicator container */
   const scrollWraps = [];
   document.querySelectorAll('.reel-grid').forEach(grid => {
