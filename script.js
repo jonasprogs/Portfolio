@@ -201,7 +201,7 @@ function setupGridPreload(grid) {
             done = true; clearTimeout(fallback); item.classList.add('animate');
           }
         });
-      }, { rootMargin: '100px' });
+      }, { rootMargin: '500px' });
 
       itemObs.observe(iframe);
     });
@@ -522,6 +522,7 @@ if (fotoMoreBtn) fotoMoreBtn.addEventListener('click', () => buildGalleryMobile(
 /* ── Init ────────────────────────────────────────────────── */
 if (onMobile()) {
   /* Wrap each reel-grid in a scroll-indicator container */
+  const scrollWraps = [];
   document.querySelectorAll('.reel-grid').forEach(grid => {
     const wrap = document.createElement('div');
     wrap.className = 'reel-scroll-wrap';
@@ -531,7 +532,24 @@ if (onMobile()) {
       const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 20;
       wrap.classList.toggle('at-end', atEnd);
     }, { passive: true });
+    scrollWraps.push(wrap);
   });
+
+  /* Animate-hint: nudge right then back when section first enters viewport */
+  const hintObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      hintObs.unobserve(entry.target);
+      const grid = entry.target.querySelector('.reel-grid');
+      if (!grid || grid.scrollLeft > 0) return;
+      setTimeout(() => {
+        grid.scrollTo({ left: 48, behavior: 'smooth' });
+        setTimeout(() => grid.scrollTo({ left: 0, behavior: 'smooth' }), 540);
+      }, 400);
+    });
+  }, { threshold: 0.55 });
+
+  scrollWraps.forEach(wrap => hintObs.observe(wrap));
   buildGalleryMobile();
 } else {
   buildGalleryDesktop();
