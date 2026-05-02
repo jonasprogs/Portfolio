@@ -543,8 +543,8 @@ if (onMobile()) {
       const grid = entry.target.querySelector('.reel-grid');
       if (!grid || grid.scrollLeft > 0) return;
       setTimeout(() => {
-        grid.scrollTo({ left: 48, behavior: 'smooth' });
-        setTimeout(() => grid.scrollTo({ left: 0, behavior: 'smooth' }), 540);
+        grid.scrollTo({ left: 140, behavior: 'smooth' });
+        setTimeout(() => grid.scrollTo({ left: 0, behavior: 'smooth' }), 700);
       }, 400);
     });
   }, { threshold: 0.55 });
